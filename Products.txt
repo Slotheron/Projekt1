@@ -1,0 +1,5 @@
+1.jpg,kaminaglasses,the best glasses in the world,59
+2.jpg,kaminaglasses2,the best glasses in the world,59
+3.jpg,kaminaglasses3,the best glasses in the world,59
+4.jpg,kaminaglasses4,the best glasses in the world,59
+5.png,kaminaglasses5,the best glasses in the world,59

@@ -33,6 +33,7 @@ namespace FormApp
                 AllowUserToResizeColumns = false,
                 AllowUserToAddRows = false
             });
+            
             table.Controls.Add(grid1);
             table.SetColumnSpan(grid1, 2);
 
@@ -44,11 +45,11 @@ namespace FormApp
             };
             grid1.Columns.Insert(3, buttonColumn1);
 
-            var imagesColumn = new DataGridViewImageColumn();
-            grid1.Columns.Insert(0, imagesColumn);
+            var imagesColumn1 = new DataGridViewImageColumn();
+            grid1.Columns.Insert(0, imagesColumn1);
             //must fix error handling
             
-            string path = @"C:\Users\Joe\Desktop\textfolder\Products.txt"; /* products list location  @"";*/
+            string path = @"C:\Users\JoeKH_000\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
             foreach (string x in lines)
@@ -80,8 +81,12 @@ namespace FormApp
 
             grid2 = (new DataGridView
             {
-                ColumnCount = 5,
-                Dock = DockStyle.Fill
+                Height = 500,
+                ColumnCount = 3,
+                Dock = DockStyle.Fill,
+                AllowUserToResizeRows = false,
+                AllowUserToResizeColumns = false,
+                AllowUserToAddRows = false
             });
             table.Controls.Add(grid2);
             table.SetColumnSpan(grid2, 2);
@@ -89,15 +94,30 @@ namespace FormApp
             var buttonColumn2 = new DataGridViewButtonColumn
             {
                 Text = "Remove from cart",
-                UseColumnTextForButtonValue = true
+                UseColumnTextForButtonValue = true,
+                DefaultCellStyle = new DataGridViewCellStyle { Padding = new Padding(0, 25, 0, 25) }
             };
-            grid2.Columns.Insert(5, buttonColumn2);
+            grid2.Columns.Insert(3, buttonColumn2);
 
+            var imagesColumn2 = new DataGridViewImageColumn();
+            grid2.Columns.Insert(0, imagesColumn2);
+
+            grid1.CellClick += grid1_CellContentClicked;
         }
 
-        private void ClickedEventHandler(object sender, EventArgs e)
+        private void grid1_CellContentClicked(object sender, DataGridViewCellEventArgs e)
         {
+                var senderGrid = (DataGridView)sender;
+                if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+                {
+                    var image = grid1.Rows[e.RowIndex].Cells[0].Value;
+                    var name = grid1.Rows[e.RowIndex].Cells[1].Value;
+                    var info = grid1.Rows[e.RowIndex].Cells[2].Value;
+                    var price = grid1.Rows[e.RowIndex].Cells[3].Value;
 
+                grid2.Rows.Add(image, name, info, price);
+                }
+            
         }
     }
 }
