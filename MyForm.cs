@@ -18,6 +18,7 @@ namespace FormApp
         {
             var table = (new TableLayoutPanel
             {
+                AutoScroll = true,
                 ColumnCount = 2,
                 RowCount = 3,
                 Dock = DockStyle.Fill
@@ -82,7 +83,7 @@ namespace FormApp
             grid2 = (new DataGridView
             {
                 Height = 500,
-                ColumnCount = 3,
+                ColumnCount = 4,
                 Dock = DockStyle.Fill,
                 AllowUserToResizeRows = false,
                 AllowUserToResizeColumns = false,
@@ -97,7 +98,7 @@ namespace FormApp
                 UseColumnTextForButtonValue = true,
                 DefaultCellStyle = new DataGridViewCellStyle { Padding = new Padding(0, 25, 0, 25) }
             };
-            grid2.Columns.Insert(3, buttonColumn2);
+            grid2.Columns.Insert(4, buttonColumn2);
 
             var imagesColumn2 = new DataGridViewImageColumn();
             grid2.Columns.Insert(0, imagesColumn2);
@@ -109,21 +110,36 @@ namespace FormApp
 
         private void grid1_CellContentClicked(object sender, DataGridViewCellEventArgs e)
         {
-                var senderGrid = (DataGridView)sender;
-                if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
-                {
-                    var image = grid1.Rows[e.RowIndex].Cells[0].Value;
-                    var name = grid1.Rows[e.RowIndex].Cells[1].Value;
-                    var info = grid1.Rows[e.RowIndex].Cells[2].Value;
-                    var price = grid1.Rows[e.RowIndex].Cells[3].Value;
+            int quantity;
+            var senderGrid = (DataGridView)sender;
 
-                grid2.Rows.Add(image, name, info, price);
-                }
+            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+            {
+
+                var image = grid1.Rows[e.RowIndex].Cells[0].Value;
+                var name = grid1.Rows[e.RowIndex].Cells[1].Value;
+                var info = grid1.Rows[e.RowIndex].Cells[2].Value;
+                quantity = 1;
+                var price = grid1.Rows[e.RowIndex].Cells[3].Value;
 
                 foreach (DataGridViewRow rows in grid2.Rows)
                 {
-                    rows.Height = 75;
+                    if (name == rows.Cells[1].Value && info == rows.Cells[2].Value)
+                    {
+                        int x = Convert.ToInt16(rows.Cells[3].Value);
+                        x++;
+                        quantity = x;
+                        grid2.Rows.RemoveAt(rows.Index);
+                    }
                 }
+                grid2.Rows.Add(image, name, info, quantity, price);
+                quantity = 1;
+            }
+            
+            foreach (DataGridViewRow rows in grid2.Rows)
+            {
+                rows.Height = 75;
+            }
         }
 
         private void grid2_CellContentClicked(object sender, DataGridViewCellEventArgs e)
@@ -131,7 +147,16 @@ namespace FormApp
             var senderGrid = (DataGridView)sender;
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
-                grid2.Rows.RemoveAt(e.RowIndex);
+                int x = Convert.ToInt32(grid2.Rows[e.RowIndex].Cells[3].Value);
+                if(x > 1)
+                {
+                    x--;
+                    grid2.Rows[e.RowIndex].Cells[3].Value = x;
+                }
+                else
+                {
+                    grid2.Rows.RemoveAt(e.RowIndex);
+                }
             }
  
         }
