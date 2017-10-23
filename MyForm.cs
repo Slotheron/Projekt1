@@ -102,7 +102,9 @@ namespace FormApp
             var imagesColumn2 = new DataGridViewImageColumn();
             grid2.Columns.Insert(0, imagesColumn2);
 
-            grid1.CellClick += grid1_CellContentClicked;
+            grid1.CellContentClick += grid1_CellContentClicked;
+            grid2.CellContentClick += grid2_CellContentClicked;
+
         }
 
         private void grid1_CellContentClicked(object sender, DataGridViewCellEventArgs e)
@@ -117,7 +119,21 @@ namespace FormApp
 
                 grid2.Rows.Add(image, name, info, price);
                 }
-            
+
+                foreach (DataGridViewRow rows in grid2.Rows)
+                {
+                    rows.Height = 75;
+                }
+        }
+
+        private void grid2_CellContentClicked(object sender, DataGridViewCellEventArgs e)
+        {
+            var senderGrid = (DataGridView)sender;
+            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+            {
+                grid2.Rows.RemoveAt(e.RowIndex);
+            }
+ 
         }
     }
 }
