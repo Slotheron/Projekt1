@@ -34,7 +34,9 @@ namespace FormApp
                 AllowUserToResizeColumns = false,
                 AllowUserToAddRows = false
             });
-            
+            grid1.Columns[0].Name = "Product";
+            grid1.Columns[1].Name = "Info";
+            grid1.Columns[2].Name = "Price";
             table.Controls.Add(grid1);
             table.SetColumnSpan(grid1, 2);
 
@@ -50,7 +52,7 @@ namespace FormApp
             grid1.Columns.Insert(0, imagesColumn1);
             //must fix error handling
             
-            string path = @"C:\Users\JoeKH_000\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
+            string path = @"C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
             foreach (string x in lines)
@@ -89,6 +91,10 @@ namespace FormApp
                 AllowUserToResizeColumns = false,
                 AllowUserToAddRows = false
             });
+            grid2.Columns[0].Name = "Product";
+            grid2.Columns[1].Name = "Info";
+            grid2.Columns[2].Name = "Quantity";
+            grid2.Columns[3].Name = "Price";
             table.Controls.Add(grid2);
             table.SetColumnSpan(grid2, 2);
 
