@@ -55,7 +55,7 @@ namespace FormApp
             //C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt
             //C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt
             //C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt
-            string path = @"C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
+            string path = @"C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
             foreach (string x in lines)
@@ -69,21 +69,23 @@ namespace FormApp
                     string product = parts[1];
                     string info = parts[2];
                     string price = parts[3];
-                    grid1.Rows.Add(bitmap, product, info, price);
+                    grid1.Rows.Add(bitmap, product, info, "$" + price);
                 }
                 else
                 {
                     string product = parts[1];
                     string info = parts[2];
                     string price = parts[3];
-                    grid1.Rows.Add(null, product, info, price);
+                    grid1.Rows.Add(null, product, info, "$" + price);
                 }
                 
             }
             foreach(DataGridViewRow rows in grid1.Rows)
             {
                 rows.Height = 75;
+                grid1.Columns[2].Width = 175;
             }
+            grid1.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
             grid2 = (new DataGridView
             {
@@ -100,6 +102,7 @@ namespace FormApp
             grid2.Columns[3].Name = "Total Price";
             table.Controls.Add(grid2);
             table.SetColumnSpan(grid2, 2);
+            grid2.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
             var buttonColumn2 = new DataGridViewButtonColumn
             {
@@ -112,8 +115,7 @@ namespace FormApp
             var imagesColumn2 = new DataGridViewImageColumn();
             grid2.Columns.Insert(0, imagesColumn2);
 
-            grid1.CellContentClick += grid1_CellContentClicked;
-            grid2.CellContentClick += grid2_CellContentClicked;
+           
 
             Label summaryLabel = new Label
             {
@@ -130,9 +132,11 @@ namespace FormApp
             table.Controls.Add(textBox);
             table.SetColumnSpan(textBox, 4);
 
+            grid1.CellContentClick += Grid1_CellContentClicked;
+            grid2.CellContentClick += Grid2_CellContentClicked;
         }
 
-        private void grid1_CellContentClicked(object sender, DataGridViewCellEventArgs e)
+        private void Grid1_CellContentClicked(object sender, DataGridViewCellEventArgs e)
         {
             int quantity;
             var senderGrid = (DataGridView)sender;
@@ -145,12 +149,15 @@ namespace FormApp
                 var info = grid1.Rows[e.RowIndex].Cells[2].Value;
                 quantity = 1;
                 var price = grid1.Rows[e.RowIndex].Cells[3].Value;
-
+                string priceString = Convert.ToString(price);
+                priceString = priceString.Remove(0, 1);
+                price = priceString;
+                
                 foreach (DataGridViewRow rows in grid2.Rows)
                 {
                     if (name == rows.Cells[1].Value && info == rows.Cells[2].Value)
                     {
-                        double y = Convert.ToDouble(price);
+                        double y = Convert.ToDouble(priceString);
                         int x = Convert.ToInt16(rows.Cells[3].Value);
                         x++;
                         quantity = x;
@@ -158,30 +165,35 @@ namespace FormApp
                         grid2.Rows.RemoveAt(rows.Index);
                     }
                 }
-                grid2.Rows.Add(image, name, info, quantity, price);
+                grid2.Rows.Add(image, name, info, quantity,"$" + price);
                 quantity = 1;
             }
             
             foreach (DataGridViewRow rows in grid2.Rows)
             {
                 rows.Height = 75;
+                grid2.Columns[2].Width = 175;
+                grid2.Columns[3].Width = 50;
+                grid2.Columns[4].Width = 70;
             }
         }
 
-        private void grid2_CellContentClicked(object sender, DataGridViewCellEventArgs e)
+        private void Grid2_CellContentClicked(object sender, DataGridViewCellEventArgs e)
         {
             double singlePrice;
             var senderGrid = (DataGridView)sender;
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
-                double y = Convert.ToDouble(grid2.Rows[e.RowIndex].Cells[4].Value);
+                string stringPrice = Convert.ToString(grid2.Rows[e.RowIndex].Cells[4].Value);
+                stringPrice = stringPrice.Remove(0, 1);
+                double y = Convert.ToDouble(stringPrice);
                 int x = Convert.ToInt32(grid2.Rows[e.RowIndex].Cells[3].Value);
                 if(x > 1)
                 {
                     singlePrice = y / x;
                     x--;
                     grid2.Rows[e.RowIndex].Cells[3].Value = x;
-                    grid2.Rows[e.RowIndex].Cells[4].Value = y - singlePrice;
+                    grid2.Rows[e.RowIndex].Cells[4].Value = "$" + (y - singlePrice);
                 }
                 else
                 {
