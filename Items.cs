@@ -3,19 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Drawing;
+using System.IO;
 
-namespace Projekt1
+namespace FormApp
 {
-    class Items
+    class Items : MyForm
     {
         public string ProductName { get; set; }
         public double ProductPrice { get; set; }
-        public double TotalPrice { get; set; }
         public int ProductQuantity { get; set; }
+        public List<double> TotalPrice { get; set; } 
 
-        public double GetTotalPrice(double total, double price)
+        public double GetTotalPrice(double price)
         {
+            foreach(DataGridViewRow row in grid2.Rows)
+            {
+                ProductName = Convert.ToString(row.Cells[1].Value);
+                ProductQuantity = Convert.ToInt32(row.Cells[3].Value);
+                ProductPrice = Convert.ToDouble(row.Cells[4].Value);
+                TotalPrice.Add(ProductPrice);
 
+                
+            } 
         }
     }
 }
