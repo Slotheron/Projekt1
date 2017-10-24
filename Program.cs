@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
 
-namespace FormApp
+namespace Projekt1 
 {
     class Program
     {

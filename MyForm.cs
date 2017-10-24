@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
 
-namespace FormApp
+namespace Projekt1
 {
     class MyForm : Form
     {
@@ -55,7 +55,7 @@ namespace FormApp
             //C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt
             //C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt
             //C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt
-            string path = @"C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
+            string path = @"C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
             foreach (string x in lines)
