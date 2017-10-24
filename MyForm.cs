@@ -51,7 +51,10 @@ namespace FormApp
             var imagesColumn1 = new DataGridViewImageColumn();
             grid1.Columns.Insert(0, imagesColumn1);
             //must fix error handling
-            
+
+            //C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt
+            //C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt
+            //
             string path = @"C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 

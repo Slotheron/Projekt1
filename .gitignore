@@ -50,3 +50,4 @@ Ankh.NoLoad
 !/packages/*/lib/*.dll
 !/packages/*/lib/*/*.dll
 *.ide
+/.vs/Projekt1/v15/Server/sqlite3
