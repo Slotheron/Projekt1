@@ -83,7 +83,9 @@ namespace FormApp
             foreach(DataGridViewRow rows in grid1.Rows)
             {
                 rows.Height = 75;
+                grid1.Columns[2].Width = 175;
             }
+            grid1.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
             grid2 = (new DataGridView
             {
@@ -112,8 +114,8 @@ namespace FormApp
             var imagesColumn2 = new DataGridViewImageColumn();
             grid2.Columns.Insert(0, imagesColumn2);
 
-            grid1.CellContentClick += grid1_CellContentClicked;
-            grid2.CellContentClick += grid2_CellContentClicked;
+            grid1.CellContentClick += Grid1_CellContentClicked;
+            grid2.CellContentClick += Grid2_CellContentClicked;
 
             Label summaryLabel = new Label
             {
@@ -132,7 +134,7 @@ namespace FormApp
 
         }
 
-        private void grid1_CellContentClicked(object sender, DataGridViewCellEventArgs e)
+        private void Grid1_CellContentClicked(object sender, DataGridViewCellEventArgs e)
         {
             int quantity;
             var senderGrid = (DataGridView)sender;
@@ -165,10 +167,11 @@ namespace FormApp
             foreach (DataGridViewRow rows in grid2.Rows)
             {
                 rows.Height = 75;
+                grid2.Columns[2].Width = 300;
             }
         }
 
-        private void grid2_CellContentClicked(object sender, DataGridViewCellEventArgs e)
+        private void Grid2_CellContentClicked(object sender, DataGridViewCellEventArgs e)
         {
             double singlePrice;
             var senderGrid = (DataGridView)sender;
