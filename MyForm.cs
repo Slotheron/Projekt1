@@ -27,7 +27,7 @@ namespace FormApp
 
             grid1 = (new DataGridView
             {
-                Height = 500,
+                Height = 400,
                 ColumnCount = 3,
                 Dock = DockStyle.Fill,
                 AllowUserToResizeRows = false,
@@ -52,7 +52,7 @@ namespace FormApp
             grid1.Columns.Insert(0, imagesColumn1);
             //must fix error handling
             
-            string path = @"C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
+            string path = @"C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
             foreach (string x in lines)
@@ -84,7 +84,7 @@ namespace FormApp
 
             grid2 = (new DataGridView
             {
-                Height = 500,
+                Height = 300,
                 ColumnCount = 4,
                 Dock = DockStyle.Fill,
                 AllowUserToResizeRows = false,
@@ -111,6 +111,21 @@ namespace FormApp
 
             grid1.CellContentClick += grid1_CellContentClicked;
             grid2.CellContentClick += grid2_CellContentClicked;
+
+            Label summaryLabel = new Label
+            {
+                Text = "Total price below",
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+            table.Controls.Add(summaryLabel);
+
+            var textBox = new TextBox
+            {
+
+            };
+            table.Controls.Add(textBox);
+            table.SetColumnSpan(textBox, 4);
 
         }
 
