@@ -132,9 +132,11 @@ namespace FormApp
                 {
                     if (name == rows.Cells[1].Value && info == rows.Cells[2].Value)
                     {
+                        double y = Convert.ToDouble(price);
                         int x = Convert.ToInt16(rows.Cells[3].Value);
                         x++;
                         quantity = x;
+                        price = y * quantity;
                         grid2.Rows.RemoveAt(rows.Index);
                     }
                 }
@@ -150,14 +152,18 @@ namespace FormApp
 
         private void grid2_CellContentClicked(object sender, DataGridViewCellEventArgs e)
         {
+            double singlePrice;
             var senderGrid = (DataGridView)sender;
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
+                double y = Convert.ToDouble(grid2.Rows[e.RowIndex].Cells[4].Value);
                 int x = Convert.ToInt32(grid2.Rows[e.RowIndex].Cells[3].Value);
                 if(x > 1)
                 {
+                    singlePrice = y / x;
                     x--;
                     grid2.Rows[e.RowIndex].Cells[3].Value = x;
+                    grid2.Rows[e.RowIndex].Cells[4].Value = y - singlePrice;
                 }
                 else
                 {
