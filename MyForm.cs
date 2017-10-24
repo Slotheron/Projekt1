@@ -36,7 +36,7 @@ namespace FormApp
             });
             grid1.Columns[0].Name = "Product";
             grid1.Columns[1].Name = "Info";
-            grid1.Columns[2].Name = "Price";
+            grid1.Columns[2].Name = "Price Per Item";
             table.Controls.Add(grid1);
             table.SetColumnSpan(grid1, 2);
 
@@ -54,8 +54,8 @@ namespace FormApp
 
             //C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt
             //C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt
-            //
-            string path = @"C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
+            //C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt
+            string path = @"C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
             foreach (string x in lines)
@@ -97,7 +97,7 @@ namespace FormApp
             grid2.Columns[0].Name = "Product";
             grid2.Columns[1].Name = "Info";
             grid2.Columns[2].Name = "Quantity";
-            grid2.Columns[3].Name = "Price";
+            grid2.Columns[3].Name = "Total Price";
             table.Controls.Add(grid2);
             table.SetColumnSpan(grid2, 2);
 
