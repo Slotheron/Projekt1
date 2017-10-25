@@ -7,30 +7,28 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
 
-namespace Projekt1 
-{
-    
+namespace Projekt1
+{ 
     class Items : MyForm
     { 
-        public string ProductName { get; set; }
-        public double ProductPrice { get; set; }
-        public int ProductQuantity { get; set; }
-        public List<Items> ItemsList { get; set; } 
+        List<Product>ItemList { get; set; }
+    }
+    class Product
+    {
+        public string Name { get; set; }
+        public string Info { get; set; }
+        public double Price { get; set; }
+        public int Quantity { get; set; }
+    }
 
-        public void GetTotalPrice()
+    public void CreatProduct(string name, string info, double price, int quantity)
+    {
+        new Product
         {
-            foreach(DataGridViewRow row in grid2.Rows)
-            {
-                new Items
-                {
-                ProductName = Convert.ToString(row.Cells[1].Value),
-                ProductQuantity = Convert.ToInt32(row.Cells[3].Value),
-                ProductPrice = Convert.ToDouble(row.Cells[4].Value),
-                };
-                //itemlistadd
-
-                
-            } 
-        }
+            Name = name,
+            Info = info,
+            Price = price,
+            Quantity = quantity
+        };
     }
 }
