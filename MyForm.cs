@@ -13,7 +13,7 @@ namespace Projekt1
     {
         public DataGridView grid1;
         public DataGridView grid2;
-
+        
         public MyForm()
         {
             var table = (new TableLayoutPanel
@@ -30,6 +30,7 @@ namespace Projekt1
                 Height = 400,
                 ColumnCount = 3,
                 Dock = DockStyle.Fill,
+                //sets the grid to a static size that the user can not change.
                 AllowUserToResizeRows = false,
                 AllowUserToResizeColumns = false,
                 AllowUserToAddRows = false
@@ -39,28 +40,31 @@ namespace Projekt1
             grid1.Columns[2].Name = "Price Per Item";
             table.Controls.Add(grid1);
             table.SetColumnSpan(grid1, 2);
-
+            //creates a button column in grid1
             var buttonColumn1 = new DataGridViewButtonColumn
             {
                 Text = "Add to cart",
+                //uses Text as the button's text ( which is seperate without this )
                 UseColumnTextForButtonValue = true,
                 DefaultCellStyle = new DataGridViewCellStyle { Padding = new Padding(0,25,0,25) }
             };
             grid1.Columns.Insert(3, buttonColumn1);
-
+            //creates image column in grid1
             var imagesColumn1 = new DataGridViewImageColumn();
             grid1.Columns.Insert(0, imagesColumn1);
-            //must fix error handling
 
+            //users' file paths
             //C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt
             //C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt
             //C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt
             string path = @"C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
+            //loop to grab values from a text file to create Products or Items.
             foreach (string x in lines)
             {
-                
+                //if file has image it will proceed as normal, otherwise sets the first argument in the row to null. 
+                //could fix instead to handle the error of missing image file. but then all items will have to have an image.
                 string[] parts = x.Split(',');
                 if (parts[0].Contains(".jpg") || parts[0].Contains(".png"))
                 {
@@ -80,11 +84,13 @@ namespace Projekt1
                 }
                 
             }
+            //resizing of each rows height to a static amount and the info column's width.
             foreach(DataGridViewRow rows in grid1.Rows)
             {
                 rows.Height = 75;
                 grid1.Columns[2].Width = 175;
             }
+            //makes the info column's text multilined
             grid1.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
             grid2 = (new DataGridView
@@ -92,18 +98,21 @@ namespace Projekt1
                 Height = 300,
                 ColumnCount = 4,
                 Dock = DockStyle.Fill,
+                //sets the grid to a static size that the user can not change.
                 AllowUserToResizeRows = false,
                 AllowUserToResizeColumns = false,
                 AllowUserToAddRows = false
             });
+            //grid2 headers
             grid2.Columns[0].Name = "Product";
             grid2.Columns[1].Name = "Info";
             grid2.Columns[2].Name = "Quantity";
             grid2.Columns[3].Name = "Total Price";
             table.Controls.Add(grid2);
             table.SetColumnSpan(grid2, 2);
+            //makes the info column's text multilined
             grid2.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-
+            //set the button column for the cart grid (grid2)
             var buttonColumn2 = new DataGridViewButtonColumn
             {
                 Text = "Remove from cart",
@@ -111,12 +120,12 @@ namespace Projekt1
                 DefaultCellStyle = new DataGridViewCellStyle { Padding = new Padding(0, 25, 0, 25) }
             };
             grid2.Columns.Insert(4, buttonColumn2);
-
+            //sets image column for the cart grid (grid2)
             var imagesColumn2 = new DataGridViewImageColumn();
             grid2.Columns.Insert(0, imagesColumn2);
 
            
-
+            // subtotal box next to grid2 (cart)
             Label summaryLabel = new Label
             {
                 Text = "Total price below",
@@ -137,6 +146,8 @@ namespace Projekt1
             
         }
 
+
+        //click methods for adding and removing items to the cart grid (grid2)
         private void Grid1_CellContentClicked(object sender, DataGridViewCellEventArgs e)
         {
             int quantity;
@@ -156,6 +167,7 @@ namespace Projekt1
                 
                 foreach (DataGridViewRow rows in grid2.Rows)
                 {
+                    //if product exists
                     if (name == rows.Cells[1].Value && info == rows.Cells[2].Value)
                     {
                         double y = Convert.ToDouble(priceString);
@@ -167,9 +179,10 @@ namespace Projekt1
                     }
                 }
                 grid2.Rows.Add(image, name, info, quantity,"$" + price);
-                quantity = 1;
             }
-            
+
+            //resizing of each rows height to a static amount and the info column's width.
+            //must occur after button click because the rows do not exist before the click event.
             foreach (DataGridViewRow rows in grid2.Rows)
             {
                 rows.Height = 75;
