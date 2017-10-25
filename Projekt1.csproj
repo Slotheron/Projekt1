@@ -47,7 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Items.cs" />
+    <Compile Include="Items.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MyForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,7 +93,9 @@
     <Content Include="9.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Products.txt" />
+    <Content Include="Products.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
