@@ -134,7 +134,6 @@ namespace Projekt1
 
             grid1.CellContentClick += Grid1_CellContentClicked;
             grid2.CellContentClick += Grid2_CellContentClicked;
-            
         }
 
         private void Grid1_CellContentClicked(object sender, DataGridViewCellEventArgs e)
