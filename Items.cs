@@ -9,11 +9,21 @@ using System.IO;
 
 namespace Projekt1
 { 
-    class Items : MyForm
+    class Products : MyForm
     { 
-        public List<Product>ItemList { get; set; }
+        public List<Product> ProductList{ get; set; }
+        public void AddProduct(string name, string info, double price, int quantity)
+        {
+            ProductList.Add(new Product
+            {
+                ItemName = name,
+                Info = info,
+                Price = price,
+                Quantity = quantity
+            });
+        }
     }
-    class Product : Items
+    class Product : MyForm
     {
         public string ItemName { get; set; }
         public string Info { get; set; }
@@ -21,8 +31,5 @@ namespace Projekt1
         public int Quantity { get; set; }
     }
 
-    public void AddProduct(Product product)
-    {
-        
-    }
+    
 }
