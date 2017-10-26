@@ -247,7 +247,7 @@ namespace Projekt1
                             Quantity = Convert.ToInt32(quantity),
                             Price = Convert.ToDouble(x)
                         });
-                        grid2.Rows.Add(image, name, info, quantity,"$" + price);
+                        grid2.Rows.Add(image, name, info, quantity, price);
                     }
                 }
                 else
