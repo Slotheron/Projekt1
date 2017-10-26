@@ -222,8 +222,13 @@ namespace Projekt1
                                 quantity = Convert.ToInt32(rows.Cells[3].Value);
                                 products[rows.Index].Quantity = quantity += 1;
                                 rows.Cells[3].Value = quantity;
-                                productBool = false;
+                                double y = Convert.ToDouble(x);
+                                y = y * quantity;
+                                string priceString = "$" + Convert.ToString(y);
+                                rows.Cells[4].Value = priceString;
                                 productTime = false;
+                                productBool = false;
+                                break;
                             }
                             else
                             {
@@ -242,7 +247,7 @@ namespace Projekt1
                             Quantity = Convert.ToInt32(quantity),
                             Price = Convert.ToDouble(x)
                         });
-                        grid2.Rows.Add(image, name, info, quantity, price);
+                        grid2.Rows.Add(image, name, info, quantity,"$" + price);
                     }
                 }
                 else
@@ -257,6 +262,13 @@ namespace Projekt1
                     grid2.Rows.Add(image, name, info, quantity, price);
                     firstTime = false;
                 }
+                foreach (DataGridViewRow rows in grid2.Rows)
+                {
+                    rows.Height = 75;
+                    grid2.Columns[2].Width = 175;
+                    grid2.Columns[3].Width = 50;
+                    grid2.Columns[4].Width = 70;
+                }
             }
         }
 
@@ -266,20 +278,26 @@ namespace Projekt1
             var senderGrid = (DataGridView)sender;
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
-                string stringPrice = Convert.ToString(grid2.Rows[e.RowIndex].Cells[4].Value);
-                stringPrice = stringPrice.Remove(0, 1);
-                double y = Convert.ToDouble(stringPrice);
                 int x = Convert.ToInt32(grid2.Rows[e.RowIndex].Cells[3].Value);
                 if(x > 1)
                 {
+                    string stringPrice = Convert.ToString(grid2.Rows[e.RowIndex].Cells[4].Value);
+                    stringPrice = stringPrice.Remove(0, 1);
+                    double y = Convert.ToDouble(stringPrice);
                     singlePrice = y / x;
                     x--;
                     grid2.Rows[e.RowIndex].Cells[3].Value = x;
                     grid2.Rows[e.RowIndex].Cells[4].Value = "$" + (y - singlePrice);
+                    products[e.RowIndex].Quantity = x;
                 }
                 else
                 {
+                    products.RemoveAt(e.RowIndex);
                     grid2.Rows.RemoveAt(e.RowIndex);
+                    if(e.RowIndex == 0)
+                    {
+                        firstTime = true;
+                    }
                 }
             }
  
