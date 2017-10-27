@@ -15,6 +15,7 @@ namespace Projekt1
         public DataGridView grid2;
         private List<Product> products;
         private bool firstTime = true;
+        public double result { get; set; }
  
         public MyForm()
         {
@@ -31,10 +32,21 @@ namespace Projekt1
             var table1 = (new TableLayoutPanel
             {
                 Height = 350,
-                BackColor = Color.Red,
                 Dock = DockStyle.Bottom
             });
             Controls.Add(table1);
+
+            var buttonOrder = new Button
+            {
+                Text = "Place Order"
+            };
+            table1.Controls.Add(buttonOrder);
+
+            var buttonSubTotal = new Button
+            {
+                Text = "SubTotal"
+            };
+            table1.Controls.Add(buttonSubTotal);
 
             grid1 = (new DataGridView
             {
@@ -71,7 +83,7 @@ namespace Projekt1
             //C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt
             //C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt
             //C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt
-            string path = @"C:\Users\JoeKH_000\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
+            string path = @"C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
             //loop to grab values from a text file to create Products or Items.
@@ -143,7 +155,8 @@ namespace Projekt1
 
             grid1.CellContentClick += Grid1_CellContentClicked;
             grid2.CellContentClick += Grid2_CellContentClicked;
-            
+            buttonOrder.Click += ClickedEventHandler1;
+            buttonSubTotal.Click += ClickedEventHandler2;
         }
 
         //click methods for adding and removing items to the cart grid (grid2)
@@ -297,6 +310,26 @@ namespace Projekt1
                 }
             }
  
+        }
+        
+        private void ClickedEventHandler1(object sender, EventArgs e)
+        {
+            foreach(Product product in products)
+            {
+                product.CalculateQuantityAndPrice();
+            }
+        }
+
+        private void ClickedEventHandler2(object sender, EventArgs e)
+        {
+            double x;
+
+            foreach (Product product in products)
+            {
+                x = product.CalculateQuantityAndPrice();
+                result += x;
+            }
+            MessageBox.Show("Total price to pay: " + result + "$");
         }
     }
 }
