@@ -15,7 +15,6 @@ namespace Projekt1
         public DataGridView grid2;
         private List<Product> products;
         private bool firstTime = true;
-        public double result { get; set; }
  
         public MyForm()
         {
