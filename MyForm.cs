@@ -302,7 +302,7 @@ namespace Projekt1
                 {
                     products.RemoveAt(e.RowIndex);
                     grid2.Rows.RemoveAt(e.RowIndex);
-                    if(e.RowIndex == 0)
+                    if(products.Count < 1)
                     {
                         firstTime = true;
                     }
