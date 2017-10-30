@@ -18,10 +18,7 @@ namespace Projekt1
 
         public double CalculateQuantityAndPrice()
         {
-            double result;
-            result = Price * Quantity;
-
-            return result;
+            return Price * Quantity;
         }
     }
 }

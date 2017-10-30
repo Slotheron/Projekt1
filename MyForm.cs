@@ -83,7 +83,7 @@ namespace Projekt1
             //C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt
             //C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt
             //C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt
-            string path = @"C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
+            string path = @"C:\Users\JoeKH_000\Documents\GitHub\Projekt1\products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
             //loop to grab values from a text file to create Products or Items.
@@ -322,14 +322,13 @@ namespace Projekt1
 
         private void ClickedEventHandler2(object sender, EventArgs e)
         {
-            double x;
+            double x = 0;
 
             foreach (Product product in products)
             {
-                x = product.CalculateQuantityAndPrice();
-                result += x;
+                x += product.CalculateQuantityAndPrice();
             }
-            MessageBox.Show("Total price to pay: " + result + "$");
+            MessageBox.Show("Total price to pay: $" + x);
         }
     }
 }
