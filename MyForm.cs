@@ -55,7 +55,8 @@ namespace Projekt1
                 //sets the grid to a static size that the user can not change.
                 AllowUserToResizeRows = false,
                 AllowUserToResizeColumns = false,
-                AllowUserToAddRows = false
+                AllowUserToAddRows = false,
+                ReadOnly = true
             });
             grid1.Columns[0].Name = "Product";
             grid1.Columns[1].Name = "Info";
@@ -82,7 +83,7 @@ namespace Projekt1
             //C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt
             //C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt
             //C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt
-            string path = @"C:\Users\JoeKH_000\Documents\GitHub\Projekt1\products.txt"; /* products list location  @"";*/
+            string path = @"C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
             //loop to grab values from a text file to create Products or Items.
@@ -126,7 +127,8 @@ namespace Projekt1
                 //sets the grid to a static size that the user can not change.
                 AllowUserToResizeRows = false,
                 AllowUserToResizeColumns = false,
-                AllowUserToAddRows = false
+                AllowUserToAddRows = false,
+                ReadOnly = true
             });
             //grid2 headers
             grid2.Columns[0].Name = "Product";
@@ -159,51 +161,6 @@ namespace Projekt1
         }
 
         //click methods for adding and removing items to the cart grid (grid2)
-        //private void Grid1_CellContentClicked(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    int quantity;
-        //    var senderGrid = (DataGridView)sender;
-
-        //    if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
-        //    {
-
-        //        var image = grid1.Rows[e.RowIndex].Cells[0].Value;
-        //        var name = grid1.Rows[e.RowIndex].Cells[1].Value;
-        //        var info = grid1.Rows[e.RowIndex].Cells[2].Value;
-        //        quantity = 1;
-        //        var price = grid1.Rows[e.RowIndex].Cells[3].Value;
-        //        string priceString = Convert.ToString(price);
-        //        priceString = priceString.Remove(0, 1);
-        //        price = priceString;
-                
-        //        foreach (DataGridViewRow rows in grid2.Rows)
-        //        {
-        //            //if product exists
-        //            if (name == rows.Cells[1].Value && info == rows.Cells[2].Value)
-        //            {
-        //                double y = Convert.ToDouble(priceString);
-        //                int x = Convert.ToInt16(rows.Cells[3].Value);
-        //                x++;
-        //                quantity = x;
-        //                price = y * quantity;
-        //                grid2.Rows.RemoveAt(rows.Index);
-        //            }
-        //        }
-        //        grid2.Rows.Add(image, name, info, quantity,"$" + price);
-        //    }
-
-        //    //resizing of each rows height to a static amount and the info column's width.
-        //    //must occur after button click because the rows do not exist before the click event.
-        //    foreach (DataGridViewRow rows in grid2.Rows)
-        //    {
-        //        rows.Height = 75;
-        //        grid2.Columns[2].Width = 175;
-        //        grid2.Columns[3].Width = 50;
-        //        grid2.Columns[4].Width = 70;
-        //    }
-        //}
-
-
         private void Grid1_CellContentClicked(object sender, DataGridViewCellEventArgs e)
         {
             bool productBool = true;
