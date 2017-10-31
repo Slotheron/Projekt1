@@ -72,3 +72,5 @@ C:\Users\Joakim\Documents\GitHub\Projekt1\obj\Debug\Projekt1.exe
 C:\Users\Joakim\Documents\GitHub\Projekt1\obj\Debug\Projekt1.pdb
 C:\Users\Jacob\Documents\GitHub\Projekt1\bin\Debug\Products.txt
 C:\Users\Joe\source\repos\Projekt1\Projekt1\bin\Debug\Products.txt
+C:\Users\Joakim\Documents\GitHub\Projekt1\bin\Debug\Products.txt
+C:\Users\JoeKH_000\Documents\GitHub\Projekt1\bin\Debug\Products.txt

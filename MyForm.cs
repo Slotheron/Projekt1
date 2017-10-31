@@ -22,15 +22,34 @@ namespace Projekt1
             var table = (new TableLayoutPanel
             {
                 AutoScroll = true,
-                ColumnCount = 2,
-                RowCount = 3,
+                ColumnCount = 4,
+                RowCount = 4,
                 Dock = DockStyle.Fill
             });
             Controls.Add(table);
 
+            var table1 = (new TableLayoutPanel
+            {
+                Height = 350,
+                Dock = DockStyle.Bottom
+            });
+            Controls.Add(table1);
+
+            var buttonOrder = new Button
+            {
+                Text = "Place Order"
+            };
+            table1.Controls.Add(buttonOrder);
+
+            var buttonSubTotal = new Button
+            {
+                Text = "SubTotal"
+            };
+            table1.Controls.Add(buttonSubTotal);
+
             grid1 = (new DataGridView
             {
-                Height = 400,
+                Height = 445,
                 ColumnCount = 3,
                 Dock = DockStyle.Fill,
                 //sets the grid to a static size that the user can not change.
@@ -42,7 +61,10 @@ namespace Projekt1
             grid1.Columns[1].Name = "Info";
             grid1.Columns[2].Name = "Price Per Item";
             table.Controls.Add(grid1);
-            table.SetColumnSpan(grid1, 2);
+            table.SetRowSpan(grid1, 2);
+            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
+            table.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
             //creates a button column in grid1
             var buttonColumn1 = new DataGridViewButtonColumn
             {
@@ -60,7 +82,7 @@ namespace Projekt1
             //C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt
             //C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt
             //C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt
-            string path = @"C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt"; /* products list location  @"";*/
+            string path = @"C:\Users\JoeKH_000\Documents\GitHub\Projekt1\products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
             //loop to grab values from a text file to create Products or Items.
@@ -98,7 +120,7 @@ namespace Projekt1
 
             grid2 = (new DataGridView
             {
-                Height = 300,
+                Height = 445, 
                 ColumnCount = 4,
                 Dock = DockStyle.Fill,
                 //sets the grid to a static size that the user can not change.
@@ -112,7 +134,10 @@ namespace Projekt1
             grid2.Columns[2].Name = "Quantity";
             grid2.Columns[3].Name = "Total Price";
             table.Controls.Add(grid2);
-            table.SetColumnSpan(grid2, 2);
+            table.SetRowSpan(grid2, 2);
+            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
+            table.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+     
             //makes the info column's text multilined
             grid2.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             //set the button column for the cart grid (grid2)
@@ -127,28 +152,11 @@ namespace Projekt1
             var imagesColumn2 = new DataGridViewImageColumn();
             grid2.Columns.Insert(0, imagesColumn2);
 
-           
-            // subtotal box next to grid2 (cart)
-            Label summaryLabel = new Label
-            {
-                Text = "Total price below",
-                Dock = DockStyle.Fill,
-                TextAlign = ContentAlignment.MiddleCenter
-            };
-            table.Controls.Add(summaryLabel);
-
-            var textBox = new TextBox
-            {
-
-            };
-            table.Controls.Add(textBox);
-            table.SetColumnSpan(textBox, 4);
-
             grid1.CellContentClick += Grid1_CellContentClicked;
             grid2.CellContentClick += Grid2_CellContentClicked;
-            
+            buttonOrder.Click += ClickedEventHandler1;
+            buttonSubTotal.Click += ClickedEventHandler2;
         }
-
 
         //click methods for adding and removing items to the cart grid (grid2)
         //private void Grid1_CellContentClicked(object sender, DataGridViewCellEventArgs e)
@@ -247,7 +255,7 @@ namespace Projekt1
                             Quantity = Convert.ToInt32(quantity),
                             Price = Convert.ToDouble(x)
                         });
-                        grid2.Rows.Add(image, name, info, quantity, price);
+                        grid2.Rows.Add(image, name, info, quantity,"$" + x);
                     }
                 }
                 else
@@ -294,13 +302,32 @@ namespace Projekt1
                 {
                     products.RemoveAt(e.RowIndex);
                     grid2.Rows.RemoveAt(e.RowIndex);
-                    if(e.RowIndex == 0)
+                    if(products.Count < 1)
                     {
                         firstTime = true;
                     }
                 }
             }
  
+        }
+        
+        private void ClickedEventHandler1(object sender, EventArgs e)
+        {
+            foreach(Product product in products)
+            {
+                product.CalculateQuantityAndPrice();
+            }
+        }
+
+        private void ClickedEventHandler2(object sender, EventArgs e)
+        {
+            double x = 0;
+
+            foreach (Product product in products)
+            {
+                x += product.CalculateQuantityAndPrice();
+            }
+            MessageBox.Show("Total price to pay: $" + x);
         }
     }
 }
