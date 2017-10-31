@@ -175,6 +175,38 @@ namespace Projekt1
             };
             table1.Controls.Add(subtotalLabel);
 
+            var receiptLabel = new Label
+            {
+                Text = "Triple Js' NetShop",
+                Font = new Font("", 14),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Anchor = AnchorStyles.Top,
+                Height = 80
+            };
+            table2.SetColumnSpan(receiptLabel, 4);
+            var header1Label = new Label
+            {
+                Text = "Product ",
+                Height = 45
+            };
+            var header2Label = new Label
+            {
+                Text = "Quantity"
+            };
+            var header3Label = new Label
+            {
+                Text = "Price Per Item"
+            };
+            var header4Label = new Label
+            {
+                Text = "Total Price"
+            };
+            table2.Controls.Add(receiptLabel);
+            table2.Controls.Add(header1Label);
+            table2.Controls.Add(header2Label);
+            table2.Controls.Add(header3Label);
+            table2.Controls.Add(header4Label);
+
             buttonOrder = new Button
             {
                 Text = "Place Order",
