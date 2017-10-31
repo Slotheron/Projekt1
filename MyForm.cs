@@ -13,6 +13,7 @@ namespace Projekt1
     {
         public DataGridView grid1;
         public DataGridView grid2;
+        public Label subtotalLabel;
         private List<Product> products;
         private bool firstTime = true;
  
@@ -27,8 +28,8 @@ namespace Projekt1
                 Dock = DockStyle.Fill,
                 BackColor = Color.Black
             });
-            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60));
-            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40));
+            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 90));
+            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10));
             Controls.Add(tableMaster);
 
             var table1 = (new TableLayoutPanel
@@ -93,7 +94,7 @@ namespace Projekt1
             //C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt
             //C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt
             //C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt
-            string path = @"C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
+            string path = @"C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
             //loop to grab values from a text file to create Products or Items.
@@ -165,17 +166,22 @@ namespace Projekt1
             grid2.Columns.Insert(0, imagesColumn2);
 
 
-            var buttonSubTotal = new Button
-            {
-                Text = "SubTotal"
-            };
-            table1.Controls.Add(buttonSubTotal);
+            //var buttonSubTotal = new Button
+            //{
+            //    Text = "SubTotal"
+            //};
+            //table1.Controls.Add(buttonSubTotal);
 
+            subtotalLabel = new Label
+            {
+                Text = Subtotal()
+            };
+            table1.Controls.Add(subtotalLabel);
 
             grid1.CellContentClick += Grid1_CellContentClicked;
             grid2.CellContentClick += Grid2_CellContentClicked;
             //buttonOrder.Click += ClickedEventHandler1;
-            buttonSubTotal.Click += ClickedEventHandler2;
+            //buttonSubTotal.Click += ClickedEventHandler2;
         }
 
         //click methods for adding and removing items to the cart grid (grid2)
@@ -196,30 +202,28 @@ namespace Projekt1
 
                 if (firstTime == false)
                 {
-                    while (productBool == true)
+                    
+                    foreach (DataGridViewRow rows in grid2.Rows)
                     {
-                        foreach (DataGridViewRow rows in grid2.Rows)
+                        if (name == rows.Cells[1].Value)
                         {
-                            if (name == rows.Cells[1].Value)
-                            {
-                                quantity = Convert.ToInt32(rows.Cells[3].Value);
-                                products[rows.Index].Quantity = quantity += 1;
-                                rows.Cells[3].Value = quantity;
-                                double y = Convert.ToDouble(x);
-                                y = y * quantity;
-                                string priceString = "$" + Convert.ToString(y);
-                                rows.Cells[4].Value = priceString;
-                                productTime = false;
-                                productBool = false;
-                                break;
-                            }
-                            else
-                            {
-                                productTime = true;
-                            }
+                            quantity = Convert.ToInt32(rows.Cells[3].Value);
+                            products[rows.Index].Quantity = quantity += 1;
+                            rows.Cells[3].Value = quantity;
+                            double y = Convert.ToDouble(x);
+                            y = y * quantity;
+                            string priceString = "$" + Convert.ToString(y);
+                            rows.Cells[4].Value = priceString;
+                            productTime = false;
+                            break;
                         }
-                        productBool = false;
+                        else
+                        {
+                            productTime = true;
+                        }     
                     }
+                    productBool = false;
+                    
                     if (productTime == true && productBool == false)
                     {
                         quantity = 1;
@@ -252,11 +256,13 @@ namespace Projekt1
                     grid2.Columns[3].Width = 50;
                     grid2.Columns[4].Width = 70;
                 }
+                subtotalLabel.Text = Subtotal();
             }
         }
 
         private void Grid2_CellContentClicked(object sender, DataGridViewCellEventArgs e)
         {
+            
             double singlePrice;
             var senderGrid = (DataGridView)sender;
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
@@ -282,6 +288,7 @@ namespace Projekt1
                         firstTime = true;
                     }
                 }
+                subtotalLabel.Text = Subtotal();
             }
  
         }
@@ -294,15 +301,15 @@ namespace Projekt1
             }
         }
 
-        private void ClickedEventHandler2(object sender, EventArgs e)
-        {
+        private string Subtotal()
+        { 
             double x = 0;
 
             foreach (Product product in products)
             {
                 x += product.CalculateQuantityAndPrice();
             }
-            MessageBox.Show("Total price to pay: $" + x);
+            return "Subtotal: $" + x;
         }
     }
 }
