@@ -19,37 +19,48 @@ namespace Projekt1
         public MyForm()
         {
             products = new List<Product> { };
-            var table = (new TableLayoutPanel
+            var tableMaster = (new TableLayoutPanel
             {
-                AutoScroll = true,
-                ColumnCount = 4,
-                RowCount = 4,
-                Dock = DockStyle.Fill
+                //AutoScroll = true,
+                ColumnCount = 2,
+                RowCount = 1,
+                Dock = DockStyle.Fill,
+                BackColor = Color.Black
             });
-            Controls.Add(table);
+            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60));
+            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40));
+            Controls.Add(tableMaster);
 
             var table1 = (new TableLayoutPanel
             {
-                Height = 350,
-                Dock = DockStyle.Bottom
+               ColumnCount = 2,
+               RowCount = 2,
+               BackColor = Color.Red,
+               Dock = DockStyle.Fill
             });
-            Controls.Add(table1);
+            table1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 90));
+            table1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10));
+            tableMaster.Controls.Add(table1);
 
-            var buttonOrder = new Button
+            var table2 = (new TableLayoutPanel
             {
-                Text = "Place Order"
-            };
-            table1.Controls.Add(buttonOrder);
+                ColumnCount = 3,
+                BackColor = Color.Blue,
+                Dock = DockStyle.Fill
+            });
+            tableMaster.Controls.Add(table2);
 
-            var buttonSubTotal = new Button
-            {
-                Text = "SubTotal"
-            };
-            table1.Controls.Add(buttonSubTotal);
+            //var buttonOrder = new Button
+            //{
+            //    Text = "Place Order"
+            //};
+            //table1.Controls.Add(buttonOrder);
+
+
 
             grid1 = (new DataGridView
             {
-                Height = 445,
+                Height = 500,
                 ColumnCount = 3,
                 Dock = DockStyle.Fill,
                 //sets the grid to a static size that the user can not change.
@@ -61,10 +72,9 @@ namespace Projekt1
             grid1.Columns[0].Name = "Product";
             grid1.Columns[1].Name = "Info";
             grid1.Columns[2].Name = "Price Per Item";
-            table.Controls.Add(grid1);
-            table.SetRowSpan(grid1, 2);
-            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
-            table.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            table1.Controls.Add(grid1);
+            table1.SetColumnSpan(grid1, 2);
+            
 
             //creates a button column in grid1
             var buttonColumn1 = new DataGridViewButtonColumn
@@ -121,7 +131,7 @@ namespace Projekt1
 
             grid2 = (new DataGridView
             {
-                Height = 445, 
+                Height = 500, 
                 ColumnCount = 4,
                 Dock = DockStyle.Fill,
                 //sets the grid to a static size that the user can not change.
@@ -135,13 +145,12 @@ namespace Projekt1
             grid2.Columns[1].Name = "Info";
             grid2.Columns[2].Name = "Quantity";
             grid2.Columns[3].Name = "Total Price";
-            table.Controls.Add(grid2);
-            table.SetRowSpan(grid2, 2);
-            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
-            table.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-     
+            table1.Controls.Add(grid2);
+            //table1.SetRowSpan(grid2, 2);
+            
             //makes the info column's text multilined
             grid2.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+
             //set the button column for the cart grid (grid2)
             var buttonColumn2 = new DataGridViewButtonColumn
             {
@@ -150,13 +159,22 @@ namespace Projekt1
                 DefaultCellStyle = new DataGridViewCellStyle { Padding = new Padding(0, 25, 0, 25) }
             };
             grid2.Columns.Insert(4, buttonColumn2);
+
             //sets image column for the cart grid (grid2)
             var imagesColumn2 = new DataGridViewImageColumn();
             grid2.Columns.Insert(0, imagesColumn2);
 
+
+            var buttonSubTotal = new Button
+            {
+                Text = "SubTotal"
+            };
+            table1.Controls.Add(buttonSubTotal);
+
+
             grid1.CellContentClick += Grid1_CellContentClicked;
             grid2.CellContentClick += Grid2_CellContentClicked;
-            buttonOrder.Click += ClickedEventHandler1;
+            //buttonOrder.Click += ClickedEventHandler1;
             buttonSubTotal.Click += ClickedEventHandler2;
         }
 
