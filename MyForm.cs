@@ -66,6 +66,9 @@ namespace Projekt1
             grid1.Columns[0].Name = "Product";
             grid1.Columns[1].Name = "Info";
             grid1.Columns[2].Name = "Price Per Item";
+            grid1.Columns["Product"].ReadOnly = true;
+            grid1.Columns["Info"].ReadOnly = true;
+            grid1.Columns["Price Per Item"].ReadOnly = true;
             table1.Controls.Add(grid1);
             table1.SetColumnSpan(grid1, 2);
             
@@ -87,7 +90,7 @@ namespace Projekt1
             //C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt
             //C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt
             //C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt
-            string path = @"C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
+            string path = @"C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
             //loop to grab values from a text file to create Products or Items.
@@ -140,6 +143,10 @@ namespace Projekt1
             grid2.Columns[1].Name = "Info";
             grid2.Columns[2].Name = "Quantity";
             grid2.Columns[3].Name = "Total Price";
+            grid2.Columns["Product"].ReadOnly = true;
+            grid2.Columns["Info"].ReadOnly = true;
+            grid2.Columns["Quantity"].ReadOnly = true;
+            grid2.Columns["Total Price"].ReadOnly = true;
             table1.Controls.Add(grid2);
             //table1.SetRowSpan(grid2, 2);
             
