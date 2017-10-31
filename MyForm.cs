@@ -28,8 +28,8 @@ namespace Projekt1
                 Dock = DockStyle.Fill,
                 BackColor = Color.Black
             });
-            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 90));
-            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10));
+            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45));
+            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55));
             Controls.Add(tableMaster);
 
             var table1 = (new TableLayoutPanel
@@ -309,7 +309,7 @@ namespace Projekt1
             {
                 x += product.CalculateQuantityAndPrice();
             }
-            return "Subtotal: $" + x;
+            return "Subtotal: " + Environment.NewLine + "$" + x;
         }
     }
 }
