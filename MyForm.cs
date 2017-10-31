@@ -13,6 +13,7 @@ namespace Projekt1
     {
         public DataGridView grid1;
         public DataGridView grid2;
+        TableLayoutPanel table2;
         public Label subtotalLabel;
         private List<Product> products;
         private bool firstTime = true;
@@ -22,13 +23,12 @@ namespace Projekt1
             products = new List<Product> { };
             var tableMaster = (new TableLayoutPanel
             {
-                //AutoScroll = true,
                 ColumnCount = 2,
                 RowCount = 1,
                 Dock = DockStyle.Fill
             });
-            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45));
-            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55));
+            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70));
+            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30));
             Controls.Add(tableMaster);
 
             var table1 = (new TableLayoutPanel
@@ -41,11 +41,12 @@ namespace Projekt1
             table1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10));
             tableMaster.Controls.Add(table1);
 
-            var table2 = (new TableLayoutPanel
+            table2 = (new TableLayoutPanel
             {
                 AutoScroll = true,
-                ColumnCount = 3,
-                Dock = DockStyle.Fill
+                ColumnCount = 4,
+                Dock = DockStyle.Fill,
+                BackColor = Color.Gray
             });
             tableMaster.Controls.Add(table2);
             
@@ -59,7 +60,8 @@ namespace Projekt1
                 AllowUserToResizeRows = false,
                 AllowUserToResizeColumns = false,
                 AllowUserToAddRows = false,
-                ReadOnly = true
+                ReadOnly = true,
+                BackgroundColor = Color.White
             });
             grid1.Columns[0].Name = "Product";
             grid1.Columns[1].Name = "Info";
@@ -130,7 +132,8 @@ namespace Projekt1
                 AllowUserToResizeRows = false,
                 AllowUserToResizeColumns = false,
                 AllowUserToAddRows = false,
-                ReadOnly = true
+                ReadOnly = true,
+                BackgroundColor = Color.White
             });
             //grid2 headers
             grid2.Columns[0].Name = "Product";
@@ -168,7 +171,8 @@ namespace Projekt1
             {
                 Text = "Place Order",
                 Dock = DockStyle.Bottom,
-                Height = 100
+                Height = 100,
+                BackColor = Color.White
             };
             table2.Controls.Add(buttonOrder);
             table2.SetColumnSpan(buttonOrder, 4);
@@ -292,6 +296,10 @@ namespace Projekt1
             foreach(Product product in products)
             {
                 product.CalculateQuantityAndPrice();
+                CreateNameLabel(product);
+                CreateQuantityLabel(product);
+                CreatePriceLabel(product);
+                CreateTotalLabel(product);
             }
         }
 
@@ -304,6 +312,37 @@ namespace Projekt1
                 x += product.CalculateQuantityAndPrice();
             }
             return "Subtotal: " + Environment.NewLine + "$" + x;
+        }
+
+
+        //Receipt labels
+        private void CreateNameLabel(Product product)
+        {
+            table2.Controls.Add(new Label
+            {
+                Text = product.ItemName
+            });
+        }
+        private void CreateQuantityLabel(Product product)
+        {
+            table2.Controls.Add(new Label
+            {
+                Text = Convert.ToString(product.Quantity)
+            });
+        }
+        private void CreatePriceLabel(Product product)
+        {
+            table2.Controls.Add(new Label
+            {
+                Text = "$" + Convert.ToString(product.Price)
+            }); 
+        }
+        private void CreateTotalLabel(Product product)
+        {
+            table2.Controls.Add(new Label
+            {
+                Text = "$" + Convert.ToString(product.CalculateQuantityAndPrice())
+            });
         }
     }
 }
