@@ -52,3 +52,7 @@ Ankh.NoLoad
 *.ide
 /.vs/Projekt1/v15/Server/sqlite3
 /.vs/Projekt1/v15/sqlite3
+obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+
+
+obj/Debug/Projekt1.csproj.CoreCompileInputs.cache
