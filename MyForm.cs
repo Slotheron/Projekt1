@@ -28,8 +28,8 @@ namespace Projekt1
                 RowCount = 1,
                 Dock = DockStyle.Fill
             });
-            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70));
-            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30));
+            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
+            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
             Controls.Add(tableMaster);
 
             var table1 = (new TableLayoutPanel

@@ -1,17 +1,17 @@
-1.png,HP,Laptop,560
-1.1.png,Apple,Macbook pro,950
-1.2.jpg,Dell,Laptop,670
-2.jpg,Apple,Iphone X,749
-2.1.jpg,Samsung,S4,750
-2.2.jpg,Sony,Xperia z5,700
-3.jpg,Apple,Apple TV,70
-3.1.jpg,Google,Chromecast,40
-4.0.jpg,MSI,GTX 970,300
-4.1.jpg,ASUS,GTX 1070,350
-4.2.jpg,MSI,GTX TITAN X,285
-5.0.jpg,ASUS,B250-PRO,185
-5.1.png,ASUS,Pro Gaming Aura,245
-5.2.jpg,ASUS,H81-PLUS,220
-6.0.jpg,ASUS,Computer,670
-6.1.jpg,Packard-Bell,Computer,789
-6.2.jpg,Lenovo,Computer,550
+1.png,HP Laptop,A Low End Laptop,560
+1.1.png,Macbook Pro,A Mid End Mac Laptop,3575
+1.2.jpg,Dell Laptop,"Dude he got a dell" Laptop,670
+2.jpg,Iphone X,Apple Mobile Phone,1100
+2.1.jpg,Samsung S4,Better than Apple's,750
+2.2.jpg,Sony Xperia Z5,Nice Phone,900
+3.jpg,Apple TV,A TV,2000
+3.1.jpg,Google Chromecast,Netflix Yo,400
+4.0.jpg,MSI GTX 970,Mid-High Graphics Card,295
+4.1.jpg,ASUS GTX 1070,High End Graphics Card,375
+4.2.jpg,MSI GTX TITAN X,High End Graphics Card that you can't afford,1850
+5.0.jpg,ASUS B250-PRO,Motherboard,200
+5.1.png,ASUS Pro Gaming Aura,Gaming Motherboard,245
+5.2.jpg,ASUS H81-PLUS,Motherboard,220
+6.0.jpg,ASUS Computer,Gaming Computer,1200
+6.1.jpg,Packard-Bell Desktop,Home Computer,789
+6.2.jpg,Lenovo Desktop,Computer,550
