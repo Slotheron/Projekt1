@@ -25,8 +25,7 @@ namespace Projekt1
                 //AutoScroll = true,
                 ColumnCount = 2,
                 RowCount = 1,
-                Dock = DockStyle.Fill,
-                BackColor = Color.Black
+                Dock = DockStyle.Fill
             });
             tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45));
             tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55));
@@ -36,7 +35,6 @@ namespace Projekt1
             {
                ColumnCount = 2,
                RowCount = 2,
-               BackColor = Color.Red,
                Dock = DockStyle.Fill
             });
             table1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 90));
@@ -45,19 +43,12 @@ namespace Projekt1
 
             var table2 = (new TableLayoutPanel
             {
+                AutoScroll = true,
                 ColumnCount = 3,
-                BackColor = Color.Blue,
                 Dock = DockStyle.Fill
             });
             tableMaster.Controls.Add(table2);
-
-            //var buttonOrder = new Button
-            //{
-            //    Text = "Place Order"
-            //};
-            //table1.Controls.Add(buttonOrder);
-
-
+            
 
             grid1 = (new DataGridView
             {
@@ -166,22 +157,25 @@ namespace Projekt1
             grid2.Columns.Insert(0, imagesColumn2);
 
 
-            //var buttonSubTotal = new Button
-            //{
-            //    Text = "SubTotal"
-            //};
-            //table1.Controls.Add(buttonSubTotal);
-
             subtotalLabel = new Label
             {
-                Text = Subtotal()
+                Text = Subtotal(),
+                Dock = DockStyle.Fill
             };
             table1.Controls.Add(subtotalLabel);
 
+            var buttonOrder = new Button
+            {
+                Text = "Place Order",
+                Dock = DockStyle.Bottom,
+                Height = 100
+            };
+            table2.Controls.Add(buttonOrder);
+            table2.SetColumnSpan(buttonOrder, 4);
+
             grid1.CellContentClick += Grid1_CellContentClicked;
             grid2.CellContentClick += Grid2_CellContentClicked;
-            //buttonOrder.Click += ClickedEventHandler1;
-            //buttonSubTotal.Click += ClickedEventHandler2;
+            buttonOrder.Click += ClickedEventHandler1;
         }
 
         //click methods for adding and removing items to the cart grid (grid2)
