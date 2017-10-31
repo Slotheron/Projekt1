@@ -1,5 +1,17 @@
-1.jpg,kaminaglasses,the best glasses in the world,86
-2.jpg,kaminaglasses2,the best glasses in the world,25
-3.jpg,kaminaglasses3,the best glasses in the world,7
-4.jpg,kaminaglasses4,the best glasses in the world,749
-5.png,kaminaglasses5,the best glasses in the world,1500
+1.png,HP,Laptop,560
+1.1.png,Apple,Macbook pro,950
+1.2.jpg,Dell,Laptop,670
+2.jpg,Apple,Iphone X,749
+2.1.jpg,Samsung,S4,750
+2.2.jpg,Sony,Xperia z5,700
+3.jpg,Apple,Apple TV,70
+3.1.jpg,Google,Chromecast,40
+4.0.jpg,MSI,GTX 970,300
+4.1.jpg,ASUS,GTX 1070,350
+4.2.jpg,MSI,GTX TITAN X,285
+5.0.jpg,ASUS,B250-PRO,185
+5.1.png,ASUS,Pro Gaming Aura,245
+5.2.jpg,ASUS,H81-PLUS,220
+6.0.jpg,ASUS,Computer,670
+6.1.jpg,Packard-Bell,Computer,789
+6.2.jpg,Lenovo,Computer,550
