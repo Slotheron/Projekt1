@@ -17,6 +17,7 @@ namespace Projekt1
         public Label subtotalLabel;
         private List<Product> products;
         private bool firstTime = true;
+        private Button buttonOrder;
  
         public MyForm()
         {
@@ -174,7 +175,7 @@ namespace Projekt1
             };
             table1.Controls.Add(subtotalLabel);
 
-            var buttonOrder = new Button
+            buttonOrder = new Button
             {
                 Text = "Place Order",
                 Dock = DockStyle.Bottom,
@@ -308,6 +309,7 @@ namespace Projekt1
                 CreatePriceLabel(product);
                 CreateTotalLabel(product);
             }
+            buttonOrder.Visible = false;
         }
 
         private string Subtotal()
