@@ -15,6 +15,7 @@ namespace Projekt1
         private DataGridView grid2;
         private TableLayoutPanel table2;
         private Label subtotalLabel;
+        private Label rebateLabel;
         private List<Product> products;
         private bool firstTime = true;
         private Button buttonOrder;
@@ -40,13 +41,15 @@ namespace Projekt1
             var table1 = (new TableLayoutPanel
             {
                ColumnCount = 2,
-               RowCount = 2,
+               RowCount = 4,
                Dock = DockStyle.Fill
             });
             table1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80));
             table1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20));
-            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 50));
-            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 50));
+            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 25));
+            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 25));
+            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 25));
+            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 25));
             tableMaster.Controls.Add(table1);
 
             table2 = (new TableLayoutPanel
@@ -82,6 +85,7 @@ namespace Projekt1
             grid1.Columns["Price Per Item"].ReadOnly = true;
             table1.Controls.Add(grid1);
             table1.SetColumnSpan(grid1, 2);
+            table1.SetRowSpan(grid1, 2);
             
 
             //creates a button column in grid1
@@ -158,7 +162,9 @@ namespace Projekt1
             grid2.Columns["Qty."].ReadOnly = true;
             grid2.Columns["Total Price"].ReadOnly = true;
             table1.Controls.Add(grid2);
-            
+            table1.SetRowSpan(grid2, 2);
+
+
             //makes the info column's text multilined
             grid2.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
@@ -225,18 +231,33 @@ namespace Projekt1
             table2.Controls.Add(buttonOrder);
             table2.SetColumnSpan(buttonOrder, 4);
 
+            var table3 = (new TableLayoutPanel
+            {
+                ColumnCount = 1,
+                RowCount = 3,
+                BackColor = Color.Gray,
+                Dock = DockStyle.Bottom
+            });
+            table1.Controls.Add(table3);
+            rebateLabel = new Label
+            {
+                Text = "Enter Rebate Code Here:",
+                Dock = DockStyle.Bottom
+            };
+            table3.Controls.Add(rebateLabel);
+
             textBox1 = new TextBox
             {
-                
+                Dock = DockStyle.Bottom
             };
-            table2.Controls.Add(textBox1);
+            table3.Controls.Add(textBox1);
 
             buttonCode = new Button
             {
                 Text = "Enter discount code",
-                Dock = DockStyle.Top
+                Dock = DockStyle.Bottom
             };
-            table2.Controls.Add(buttonCode);
+            table3.Controls.Add(buttonCode);
 
             grid1.CellContentClick += Grid1_CellContentClicked;
             grid2.CellContentClick += Grid2_CellContentClicked;
