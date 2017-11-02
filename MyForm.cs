@@ -232,13 +232,15 @@ namespace Projekt1
 
             buttonCode = new Button
             {
-                Text = "Enter Code"
+                Text = "Enter discount code",
+                Dock = DockStyle.Top
             };
             table2.Controls.Add(buttonCode);
 
             grid1.CellContentClick += Grid1_CellContentClicked;
             grid2.CellContentClick += Grid2_CellContentClicked;
             buttonOrder.Click += ClickedEventHandler1;
+            buttonCode.Click += ClickedEventHandler2;
         }
 
         //click methods for adding and removing items to the cart grid (grid2)
@@ -361,6 +363,27 @@ namespace Projekt1
                 CreateTotalLabel(product);
             }
             buttonOrder.Visible = false;
+        }
+
+        private void ClickedEventHandler2(object sender, EventArgs e)
+        {
+            string path1 = @"C:\Users\Jacob\Documents\GitHub\Projekt1\Codes.txt";
+            string[] validCodes = File.ReadAllLines(path1);
+            foreach (string line in validCodes)
+            {
+                try
+                {
+                    if (textBox1.Text == line)
+                    {
+                        total = total * 0.8;
+                        MessageBox.Show("You will receive a 20% discount!");
+                    }
+                }
+                catch
+                {
+                    
+                }
+            }
         }
 
         private string Subtotal()
