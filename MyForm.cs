@@ -353,6 +353,7 @@ namespace Projekt1
                 CreatePriceLabel(product);
                 CreateTotalLabel(product);
             }
+            CreateEndingLabels();
             buttonOrder.Visible = false;
         }
 
@@ -388,15 +389,31 @@ namespace Projekt1
         {
             table2.Controls.Add(new Label
             {
-                Text = "$" + Convert.ToString(product.Price)
+                Text = "$" + product.Price
             }); 
         }
         private void CreateTotalLabel(Product product)
         {
             table2.Controls.Add(new Label
             {
-                Text = "$" + Convert.ToString(product.CalculateQuantityAndPrice())
+                Text = "$" + product.CalculateQuantityAndPrice()
             });
+        }
+        private void CreateEndingLabels()
+        {
+            table2.Controls.Add(new Label
+            {
+                Text = Subtotal()                
+            });
+            table2.Controls.Add(new Label
+            {
+                Text = "Tax(5%): " + "$" 
+            });
+            table2.Controls.Add(new Label
+            {
+                Text = "Total: " + "$" + total
+            });
+            
         }
     }
 }
