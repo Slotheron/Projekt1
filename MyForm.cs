@@ -21,6 +21,8 @@ namespace Projekt1
         private double total = 0;
         private TextBox textBox1;
         private Button buttonCode;
+        private double subtotalVariable = 0;
+        private double taxAmount = 0;
  
         public MyForm()
         {
@@ -99,7 +101,7 @@ namespace Projekt1
             //C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt
             //C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt
             //C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt
-            string path = @"C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
+            string path = @"C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
             //loop to grab values from a text file to create Products or Items.
@@ -156,7 +158,6 @@ namespace Projekt1
             grid2.Columns["Qty."].ReadOnly = true;
             grid2.Columns["Total Price"].ReadOnly = true;
             table1.Controls.Add(grid2);
-            //table1.SetRowSpan(grid2, 2);
             
             //makes the info column's text multilined
             grid2.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
@@ -360,8 +361,10 @@ namespace Projekt1
                 CreatePriceLabel(product);
                 CreateTotalLabel(product);
             }
-            CreateEndingLabels();
+            taxAmount = total * 0.06;
+            total += taxAmount;
             buttonOrder.Visible = false;
+            CreateEndingLabels();
         }
 
         private string Subtotal()
@@ -372,6 +375,7 @@ namespace Projekt1
             {
                 x += product.CalculateQuantityAndPrice();
             }
+            subtotalVariable = x;
             total = x;
             return "Subtotal: " + Environment.NewLine + "$" + x;
         }
@@ -410,17 +414,17 @@ namespace Projekt1
         {
             table2.Controls.Add(new Label
             {
-                Text = Subtotal()                
+                Text = "Subtotal: $" + subtotalVariable
             });
             table2.Controls.Add(new Label
             {
-                Text = "Tax(5%): " + "$" 
+                Text = "Tax(6%): $" + taxAmount
             });
             table2.Controls.Add(new Label
             {
-                Text = "Total: " + "$" + total
+                Text = "Total: $" + total
             });
-            
+
         }
     }
 }
