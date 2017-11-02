@@ -92,3 +92,4 @@ C:\Users\Joakim\Documents\GitHub\Projekt1\bin\Debug\5.2.jpg
 C:\Users\Joakim\Documents\GitHub\Projekt1\bin\Debug\6.0.jpg
 C:\Users\Joakim\Documents\GitHub\Projekt1\bin\Debug\6.1.jpg
 C:\Users\Joakim\Documents\GitHub\Projekt1\bin\Debug\6.2.jpg
+C:\Users\Jacob\Documents\GitHub\Projekt1\bin\Debug\Codes.txt

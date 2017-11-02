@@ -15,13 +15,14 @@ namespace Projekt1
         private DataGridView grid2;
         private TableLayoutPanel table2;
         private Label subtotalLabel;
-        private Label rebateLabel;
         private List<Product> products;
         private bool firstTime = true;
         private Button buttonOrder;
         private double total = 0;
         private TextBox textBox1;
         private Button buttonCode;
+        private double subtotalVariable = 0;
+        private double taxAmount = 0;
  
         public MyForm()
         {
@@ -39,19 +40,13 @@ namespace Projekt1
             var table1 = (new TableLayoutPanel
             {
                ColumnCount = 2,
-               RowCount = 8,
+               RowCount = 2,
                Dock = DockStyle.Fill
             });
             table1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80));
             table1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20));
-            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
-            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
-            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
-            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
-            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
-            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
-            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
-            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
+            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 50));
+            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 50));
             tableMaster.Controls.Add(table1);
 
             table2 = (new TableLayoutPanel
@@ -87,7 +82,6 @@ namespace Projekt1
             grid1.Columns["Price Per Item"].ReadOnly = true;
             table1.Controls.Add(grid1);
             table1.SetColumnSpan(grid1, 2);
-            table1.SetRowSpan(grid1, 4);
             
 
             //creates a button column in grid1
@@ -107,7 +101,7 @@ namespace Projekt1
             //C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt
             //C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt
             //C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt
-            string path = @"C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
+            string path = @"C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
             //loop to grab values from a text file to create Products or Items.
@@ -164,8 +158,7 @@ namespace Projekt1
             grid2.Columns["Qty."].ReadOnly = true;
             grid2.Columns["Total Price"].ReadOnly = true;
             table1.Controls.Add(grid2);
-            table1.SetRowSpan(grid2, 4);
-
+            
             //makes the info column's text multilined
             grid2.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
@@ -186,7 +179,7 @@ namespace Projekt1
             subtotalLabel = new Label
             {
                 Text = Subtotal(),
-                Dock = DockStyle.Fill,
+                Dock = DockStyle.Fill
             };
             table1.Controls.Add(subtotalLabel);
 
@@ -232,27 +225,23 @@ namespace Projekt1
             table2.Controls.Add(buttonOrder);
             table2.SetColumnSpan(buttonOrder, 4);
 
-            rebateLabel = new Label
-            {
-                Text = "Rebate Code Here:"
-            };
-            table1.Controls.Add(rebateLabel);
             textBox1 = new TextBox
             {
-                Dock = DockStyle.Bottom
+                
             };
-            table1.Controls.Add(textBox1);
+            table2.Controls.Add(textBox1);
 
             buttonCode = new Button
             {
                 Text = "Enter discount code",
-                Dock = DockStyle.Bottom
+                Dock = DockStyle.Top
             };
-            table1.Controls.Add(buttonCode);
-        
+            table2.Controls.Add(buttonCode);
+
             grid1.CellContentClick += Grid1_CellContentClicked;
             grid2.CellContentClick += Grid2_CellContentClicked;
             buttonOrder.Click += ClickedEventHandler1;
+            buttonCode.Click += ClickedEventHandler2;
         }
 
         //click methods for adding and removing items to the cart grid (grid2)
@@ -374,7 +363,31 @@ namespace Projekt1
                 CreatePriceLabel(product);
                 CreateTotalLabel(product);
             }
+            taxAmount = total * 0.06;
+            total += taxAmount;
             buttonOrder.Visible = false;
+            CreateEndingLabels();
+        }
+
+        private void ClickedEventHandler2(object sender, EventArgs e)
+        {
+            string path1 = @"C:\Users\Jacob\Documents\GitHub\Projekt1\Codes.txt";
+            string[] validCodes = File.ReadAllLines(path1);
+            foreach (string line in validCodes)
+            {
+                try
+                {
+                    if (textBox1.Text == line)
+                    {
+                        total = total * 0.8;
+                        MessageBox.Show("You will receive a 20% discount!");
+                    }
+                }
+                catch
+                {
+                    
+                }
+            }
         }
 
         private string Subtotal()
@@ -385,6 +398,7 @@ namespace Projekt1
             {
                 x += product.CalculateQuantityAndPrice();
             }
+            subtotalVariable = x;
             total = x;
             return "Subtotal: " + Environment.NewLine + "$" + x;
         }
@@ -409,15 +423,31 @@ namespace Projekt1
         {
             table2.Controls.Add(new Label
             {
-                Text = "$" + Convert.ToString(product.Price)
+                Text = "$" + product.Price
             }); 
         }
         private void CreateTotalLabel(Product product)
         {
             table2.Controls.Add(new Label
             {
-                Text = "$" + Convert.ToString(product.CalculateQuantityAndPrice())
+                Text = "$" + product.CalculateQuantityAndPrice()
             });
+        }
+        private void CreateEndingLabels()
+        {
+            table2.Controls.Add(new Label
+            {
+                Text = "Subtotal: $" + subtotalVariable
+            });
+            table2.Controls.Add(new Label
+            {
+                Text = "Tax(6%): $" + taxAmount
+            });
+            table2.Controls.Add(new Label
+            {
+                Text = "Total: $" + total
+            });
+
         }
     }
 }

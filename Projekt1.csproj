@@ -111,6 +111,9 @@
     <Content Include="6.2.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Codes.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Products.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
