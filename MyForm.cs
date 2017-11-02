@@ -146,11 +146,11 @@ namespace Projekt1
             //grid2 headers
             grid2.Columns[0].Name = "Product";
             grid2.Columns[1].Name = "Info";
-            grid2.Columns[2].Name = "Quantity";
+            grid2.Columns[2].Name = "Qty.";
             grid2.Columns[3].Name = "Total Price";
             grid2.Columns["Product"].ReadOnly = true;
             grid2.Columns["Info"].ReadOnly = true;
-            grid2.Columns["Quantity"].ReadOnly = true;
+            grid2.Columns["Qty."].ReadOnly = true;
             grid2.Columns["Total Price"].ReadOnly = true;
             table1.Controls.Add(grid2);
             //table1.SetRowSpan(grid2, 2);
@@ -295,7 +295,7 @@ namespace Projekt1
                 {
                     rows.Height = 75;
                     grid2.Columns[2].Width = 125;
-                    grid2.Columns[3].Width = 25;
+                    grid2.Columns[3].Width = 30;
                     grid2.Columns[4].Width = 70;
                 }
                 subtotalLabel.Text = Subtotal();
