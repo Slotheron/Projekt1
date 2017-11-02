@@ -18,6 +18,8 @@ namespace Projekt1
         private List<Product> products;
         private bool firstTime = true;
         private Button buttonOrder;
+        private double total = 0;
+        private TextBox textBox1;
  
         public MyForm()
         {
@@ -96,7 +98,7 @@ namespace Projekt1
             //C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt
             //C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt
             //C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt
-            string path = @"C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt"; /* products list location  @"";*/
+            string path = @"C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
             //loop to grab values from a text file to create Products or Items.
@@ -218,6 +220,12 @@ namespace Projekt1
                 Height = 100,
                 BackColor = Color.White
             };
+
+            textBox1 = new TextBox
+            {
+
+            };
+            table2.Controls.Add(textBox1);
             table2.Controls.Add(buttonOrder);
             table2.SetColumnSpan(buttonOrder, 4);
 
@@ -356,6 +364,7 @@ namespace Projekt1
             {
                 x += product.CalculateQuantityAndPrice();
             }
+            total = x;
             return "Subtotal: " + Environment.NewLine + "$" + x;
         }
 
