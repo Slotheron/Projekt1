@@ -11,10 +11,10 @@ namespace Projekt1
 {
     class MyForm : Form
     {
-        public DataGridView grid1;
-        public DataGridView grid2;
-        TableLayoutPanel table2;
-        public Label subtotalLabel;
+        private DataGridView grid1;
+        private DataGridView grid2;
+        private TableLayoutPanel table2;
+        private Label subtotalLabel;
         private List<Product> products;
         private bool firstTime = true;
         private Button buttonOrder;
@@ -28,8 +28,8 @@ namespace Projekt1
                 RowCount = 1,
                 Dock = DockStyle.Fill
             });
-            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
-            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
+            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55));
+            tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45));
             Controls.Add(tableMaster);
 
             var table1 = (new TableLayoutPanel
@@ -38,8 +38,10 @@ namespace Projekt1
                RowCount = 2,
                Dock = DockStyle.Fill
             });
-            table1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 90));
-            table1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10));
+            table1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80));
+            table1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20));
+            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 50));
+            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 50));
             tableMaster.Controls.Add(table1);
 
             table2 = (new TableLayoutPanel
@@ -49,12 +51,15 @@ namespace Projekt1
                 Dock = DockStyle.Fill,
                 BackColor = Color.Gray
             });
+            table2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
+            table2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
+            table2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
+            table2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
             tableMaster.Controls.Add(table2);
             
 
             grid1 = (new DataGridView
             {
-                Height = 500,
                 ColumnCount = 3,
                 Dock = DockStyle.Fill,
                 //sets the grid to a static size that the user can not change.
@@ -91,7 +96,7 @@ namespace Projekt1
             //C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt
             //C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt
             //C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt
-            string path = @"C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
+            string path = @"C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
             //loop to grab values from a text file to create Products or Items.
@@ -122,14 +127,13 @@ namespace Projekt1
             foreach(DataGridViewRow rows in grid1.Rows)
             {
                 rows.Height = 75;
-                grid1.Columns[2].Width = 175;
+                grid1.Columns[2].Width = 125;
             }
             //makes the info column's text multilined
             grid1.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
             grid2 = (new DataGridView
             {
-                Height = 500, 
                 ColumnCount = 4,
                 Dock = DockStyle.Fill,
                 //sets the grid to a static size that the user can not change.
@@ -171,8 +175,7 @@ namespace Projekt1
             subtotalLabel = new Label
             {
                 Text = Subtotal(),
-                Dock = DockStyle.Fill,
-                Font = new Font ("", 12)
+                Dock = DockStyle.Fill
             };
             table1.Controls.Add(subtotalLabel);
 
@@ -188,19 +191,19 @@ namespace Projekt1
             var header1Label = new Label
             {
                 Text = "Product ",
-                Height = 45
+                Height = 45,
             };
             var header2Label = new Label
             {
-                Text = "Quantity"
+                Text = "Quantity",
             };
             var header3Label = new Label
             {
-                Text = "Price Per Item"
+                Text = "Price Per Item",
             };
             var header4Label = new Label
             {
-                Text = "Total Price"
+                Text = "Total Price",
             };
             table2.Controls.Add(receiptLabel);
             table2.Controls.Add(header1Label);
@@ -291,8 +294,8 @@ namespace Projekt1
                 foreach (DataGridViewRow rows in grid2.Rows)
                 {
                     rows.Height = 75;
-                    grid2.Columns[2].Width = 175;
-                    grid2.Columns[3].Width = 50;
+                    grid2.Columns[2].Width = 125;
+                    grid2.Columns[3].Width = 25;
                     grid2.Columns[4].Width = 70;
                 }
                 subtotalLabel.Text = Subtotal();
