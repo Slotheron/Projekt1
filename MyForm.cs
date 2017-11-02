@@ -355,18 +355,25 @@ namespace Projekt1
         
         private void ClickedEventHandler1(object sender, EventArgs e)
         {
-            foreach(Product product in products)
+            if (products.Count >= 1)
             {
-                product.CalculateQuantityAndPrice();
-                CreateNameLabel(product);
-                CreateQuantityLabel(product);
-                CreatePriceLabel(product);
-                CreateTotalLabel(product);
+                foreach (Product product in products)
+                {
+                    product.CalculateQuantityAndPrice();
+                    CreateNameLabel(product);
+                    CreateQuantityLabel(product);
+                    CreatePriceLabel(product);
+                    CreateTotalLabel(product);
+                }
+                taxAmount = total * 0.06;
+                total += taxAmount;
+                buttonOrder.Visible = false;
+                CreateEndingLabels();
             }
-            taxAmount = total * 0.06;
-            total += taxAmount;
-            buttonOrder.Visible = false;
-            CreateEndingLabels();
+            else
+            {
+                MessageBox.Show("You have no items currently in your cart.");
+            }
         }
 
         private void ClickedEventHandler2(object sender, EventArgs e)
