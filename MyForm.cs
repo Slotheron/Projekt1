@@ -11,19 +11,20 @@ namespace Projekt1
 {
     class MyForm : Form
     {
+        private bool firstTime = true;
+        private double subtotalVariable = 0;
+        private double taxAmount = 0;
+        private double total = 0;
         private DataGridView grid1;
         private DataGridView grid2;
         private TableLayoutPanel table2;
         private Label subtotalLabel;
         private Label rebateLabel;
-        private List<Product> products;
-        private bool firstTime = true;
         private Button buttonOrder;
-        private double total = 0;
         private TextBox textBox1;
         private Button buttonCode;
-        private double subtotalVariable = 0;
-        private double taxAmount = 0;
+        private List<Product> products;
+        
  
         public MyForm()
         {
@@ -111,10 +112,8 @@ namespace Projekt1
             //loop to grab values from a text file to create Products or Items.
             foreach (string x in lines)
             {
-                //if file has image it will proceed as normal, otherwise sets the first argument in the row to null. 
-                //could fix instead to handle the error of missing image file. but then all items will have to have an image.
                 string[] parts = x.Split(',');
-                if (parts[0].Contains(".jpg") || parts[0].Contains(".png"))
+                try
                 {
                     Image image = Image.FromFile(parts[0]);
                     Bitmap bitmap = new Bitmap(image, new Size(75, 75));
@@ -123,23 +122,30 @@ namespace Projekt1
                     string price = parts[3];
                     grid1.Rows.Add(bitmap, product, info, "$" + price);
                 }
-                else
+                catch
                 {
+                    MessageBox.Show("Check File! Missing image files.");
                     string product = parts[1];
                     string info = parts[2];
                     string price = parts[3];
                     grid1.Rows.Add(null, product, info, "$" + price);
                 }
                 
+
             }
+            //if(grid1.Rows.Count < lines.Length)
+            //{
+            //    //Application.Exit();
+            //}
             //resizing of each rows height to a static amount and the info column's width.
             foreach(DataGridViewRow rows in grid1.Rows)
             {
                 rows.Height = 75;
                 grid1.Columns[2].Width = 125;
             }
-            //makes the info column's text multilined
+            
             grid1.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            
 
             grid2 = (new DataGridView
             {
@@ -465,16 +471,28 @@ namespace Projekt1
         {
             table2.Controls.Add(new Label
             {
-                Text = "Subtotal: $" + subtotalVariable
+                Name = "0",
+                Text = "Subtotal: $" + subtotalVariable,
+                Dock = DockStyle.Right,
+                TextAlign = ContentAlignment.TopRight
             });
+            table2.SetColumnSpan(table2.Controls["0"], 4);
             table2.Controls.Add(new Label
             {
-                Text = "Tax(6%): $" + taxAmount
+                Name = "1",
+                Text = "Tax(6%): $" + taxAmount,
+                Dock = DockStyle.Right,
+                TextAlign = ContentAlignment.TopRight
             });
+            table2.SetColumnSpan(table2.Controls["1"], 4);
             table2.Controls.Add(new Label
             {
-                Text = "Total: $" + total
+                Name = "2",
+                Text = "Total: $" + total,
+                Dock = DockStyle.Right,
+                TextAlign = ContentAlignment.TopRight
             });
+            table2.SetColumnSpan(table2.Controls["2"], 4);
 
         }
     }

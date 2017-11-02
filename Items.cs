@@ -9,7 +9,7 @@ using System.IO;
 
 namespace Projekt1
 {
-    class Product : MyForm
+    class Product
     {
         public string ItemName { get; set; }
         public string Info { get; set; }
