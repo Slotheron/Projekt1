@@ -20,6 +20,7 @@ namespace Projekt1
         private Button buttonOrder;
         private double total = 0;
         private TextBox textBox1;
+        private Button buttonCode;
  
         public MyForm()
         {
@@ -220,14 +221,20 @@ namespace Projekt1
                 Height = 100,
                 BackColor = Color.White
             };
+            table2.Controls.Add(buttonOrder);
+            table2.SetColumnSpan(buttonOrder, 4);
 
             textBox1 = new TextBox
             {
-
+                
             };
             table2.Controls.Add(textBox1);
-            table2.Controls.Add(buttonOrder);
-            table2.SetColumnSpan(buttonOrder, 4);
+
+            buttonCode = new Button
+            {
+                Text = "Enter Code"
+            };
+            table2.Controls.Add(buttonCode);
 
             grid1.CellContentClick += Grid1_CellContentClicked;
             grid2.CellContentClick += Grid2_CellContentClicked;
