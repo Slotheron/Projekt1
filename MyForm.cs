@@ -15,6 +15,7 @@ namespace Projekt1
         private DataGridView grid2;
         private TableLayoutPanel table2;
         private Label subtotalLabel;
+        private Label rebateLabel;
         private List<Product> products;
         private bool firstTime = true;
         private Button buttonOrder;
@@ -38,13 +39,19 @@ namespace Projekt1
             var table1 = (new TableLayoutPanel
             {
                ColumnCount = 2,
-               RowCount = 2,
+               RowCount = 8,
                Dock = DockStyle.Fill
             });
             table1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80));
             table1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20));
-            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 50));
-            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 50));
+            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
+            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
+            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
+            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
+            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
+            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
+            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
+            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 12));
             tableMaster.Controls.Add(table1);
 
             table2 = (new TableLayoutPanel
@@ -80,6 +87,7 @@ namespace Projekt1
             grid1.Columns["Price Per Item"].ReadOnly = true;
             table1.Controls.Add(grid1);
             table1.SetColumnSpan(grid1, 2);
+            table1.SetRowSpan(grid1, 4);
             
 
             //creates a button column in grid1
@@ -99,7 +107,7 @@ namespace Projekt1
             //C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt
             //C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt
             //C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt
-            string path = @"C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
+            string path = @"C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
             //loop to grab values from a text file to create Products or Items.
@@ -156,8 +164,8 @@ namespace Projekt1
             grid2.Columns["Qty."].ReadOnly = true;
             grid2.Columns["Total Price"].ReadOnly = true;
             table1.Controls.Add(grid2);
-            //table1.SetRowSpan(grid2, 2);
-            
+            table1.SetRowSpan(grid2, 4);
+
             //makes the info column's text multilined
             grid2.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
@@ -178,7 +186,7 @@ namespace Projekt1
             subtotalLabel = new Label
             {
                 Text = Subtotal(),
-                Dock = DockStyle.Fill
+                Dock = DockStyle.Fill,
             };
             table1.Controls.Add(subtotalLabel);
 
@@ -224,18 +232,24 @@ namespace Projekt1
             table2.Controls.Add(buttonOrder);
             table2.SetColumnSpan(buttonOrder, 4);
 
+            rebateLabel = new Label
+            {
+                Text = "Rebate Code Here:"
+            };
+            table1.Controls.Add(rebateLabel);
             textBox1 = new TextBox
             {
-                
+                Dock = DockStyle.Bottom
             };
-            table2.Controls.Add(textBox1);
+            table1.Controls.Add(textBox1);
 
             buttonCode = new Button
             {
-                Text = "Enter Code"
+                Text = "Enter discount code",
+                Dock = DockStyle.Bottom
             };
-            table2.Controls.Add(buttonCode);
-
+            table1.Controls.Add(buttonCode);
+        
             grid1.CellContentClick += Grid1_CellContentClicked;
             grid2.CellContentClick += Grid2_CellContentClicked;
             buttonOrder.Click += ClickedEventHandler1;
