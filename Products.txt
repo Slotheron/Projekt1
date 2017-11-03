@@ -3,7 +3,7 @@
 1.2.jpg,Dell Laptop,"Dude he got a dell" Laptop,670
 2.jpg,Iphone X,Apple Mobile Phone,1100
 2.1.jpg,Samsung S4,Better than Apple's,750
-123,Sony Xperia Z5,Nice Phone,900
+2.2.jpg,Sony Xperia Z5,Nice Phone,900
 3.jpg,Apple TV,A TV,2000
 3.1.jpg,Google Chromecast,Netflix Yo,400
 4.0.jpg,MSI GTX 970,Mid-High Graphics Card,295
