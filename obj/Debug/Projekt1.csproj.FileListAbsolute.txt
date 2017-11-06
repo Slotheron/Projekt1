@@ -94,3 +94,4 @@ C:\Users\Joakim\Documents\GitHub\Projekt1\bin\Debug\6.1.jpg
 C:\Users\Joakim\Documents\GitHub\Projekt1\bin\Debug\6.2.jpg
 C:\Users\Jacob\Documents\GitHub\Projekt1\bin\Debug\Codes.txt
 C:\Users\Joe\source\repos\Projekt1\Projekt1\bin\Debug\Codes.txt
+C:\Users\Joakim\Documents\GitHub\Projekt1\bin\Debug\Codes.txt
