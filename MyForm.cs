@@ -432,6 +432,7 @@ namespace Projekt1
             {
                 MessageBox.Show("You will receive a 20% discount!");
                 subtotalLabel.Text = Subtotal();
+                buttonCode.Visible = false;
             }
         }
 
