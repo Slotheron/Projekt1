@@ -26,7 +26,6 @@ namespace Projekt1
         private List<Product> products;
         private bool codeFound = false;
 
-
         public MyForm()
         {
             products = new List<Product> { };
@@ -67,7 +66,6 @@ namespace Projekt1
             table2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
             tableMaster.Controls.Add(table2);
             
-
             grid1 = (new DataGridView
             {
                 ColumnCount = 3,
@@ -89,7 +87,6 @@ namespace Projekt1
             table1.SetColumnSpan(grid1, 2);
             table1.SetRowSpan(grid1, 2);
             
-
             //creates a button column in grid1
             var buttonColumn1 = new DataGridViewButtonColumn
             {
@@ -107,7 +104,7 @@ namespace Projekt1
             //C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt
             //C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt
             //C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt
-            string path = @"C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
+            string path = @"C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
             //loop to grab values from a text file to create Products or Items.
@@ -147,7 +144,6 @@ namespace Projekt1
             
             grid1.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             
-
             grid2 = (new DataGridView
             {
                 ColumnCount = 4,
@@ -171,7 +167,6 @@ namespace Projekt1
             table1.Controls.Add(grid2);
             table1.SetRowSpan(grid2, 2);
 
-
             //makes the info column's text multilined
             grid2.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
@@ -187,7 +182,6 @@ namespace Projekt1
             //sets image column for the cart grid (grid2)
             var imagesColumn2 = new DataGridViewImageColumn();
             grid2.Columns.Insert(0, imagesColumn2);
-
 
             subtotalLabel = new Label
             {
@@ -206,29 +200,13 @@ namespace Projekt1
                 Height = 80
             };
             table2.SetColumnSpan(receiptLabel, 4);
-            var header1Label = new Label
-            {
-                Text = "Product ",
-                Height = 45,
-            };
-            var header2Label = new Label
-            {
-                Text = "Quantity",
-            };
-            var header3Label = new Label
-            {
-                Text = "Price Per Item",
-            };
-            var header4Label = new Label
-            {
-                Text = "Total Price",
-            };
             table2.Controls.Add(receiptLabel);
-            table2.Controls.Add(header1Label);
-            table2.Controls.Add(header2Label);
-            table2.Controls.Add(header3Label);
-            table2.Controls.Add(header4Label);
-
+            
+            CreateHeaderLabel(table2, "Product ");
+            CreateHeaderLabel(table2, "Quantity");
+            CreateHeaderLabel(table2, "Price Per Item");
+            CreateHeaderLabel(table2, "Total Price");
+            
             buttonOrder = new Button
             {
                 Text = "Place Order",
@@ -267,14 +245,14 @@ namespace Projekt1
             };
             table3.Controls.Add(buttonCode);
 
-            grid1.CellContentClick += Grid1_CellContentClicked;
-            grid2.CellContentClick += Grid2_CellContentClicked;
-            buttonOrder.Click += ClickedEventHandler1;
-            buttonCode.Click += ClickedEventHandler2;
+            grid1.CellContentClick += AddToCartButton;
+            grid2.CellContentClick += RemoveFromCartButton;
+            buttonOrder.Click += PlaceOrderButton;
+            buttonCode.Click += RebateCodeButtonClick;
         }
 
         //click methods for adding and removing items to the cart grid (grid2)
-        private void Grid1_CellContentClicked(object sender, DataGridViewCellEventArgs e)
+        private void AddToCartButton(object sender, DataGridViewCellEventArgs e)
         {
             bool productBool = true;
             bool productTime = false;
@@ -349,7 +327,7 @@ namespace Projekt1
             }
         }
 
-        private void Grid2_CellContentClicked(object sender, DataGridViewCellEventArgs e)
+        private void RemoveFromCartButton(object sender, DataGridViewCellEventArgs e)
         {
             
             double singlePrice;
@@ -382,7 +360,7 @@ namespace Projekt1
  
         }
         
-        private void ClickedEventHandler1(object sender, EventArgs e)
+        private void PlaceOrderButton(object sender, EventArgs e)
         {
             if (products.Count >= 1)
             {
@@ -410,9 +388,9 @@ namespace Projekt1
         }
 
         //Click method for rebate code.
-        private void ClickedEventHandler2(object sender, EventArgs e)
+        private void RebateCodeButtonClick(object sender, EventArgs e)
         {
-            string path1 = @"C:\Users\Jacob\Documents\GitHub\Projekt1\Codes.txt";
+            string path1 = @"C:\Users\Joe\source\repos\Projekt1\Projekt1\Codes.txt";
             string[] validCodes = File.ReadAllLines(path1);
             string userCode = textBox1.Text;
 
@@ -450,9 +428,8 @@ namespace Projekt1
             }
             subtotalVariable = x;
             
-            return "Subtotal: " + Environment.NewLine + "$" + subtotalVariable;
+            return "Subtotal: " + Environment.NewLine + "$" + string.Format("{0:0.00}",subtotalVariable);
         }
-
 
         //Receipt labels
         private void CreateNameLabel(Product product)
@@ -473,14 +450,14 @@ namespace Projekt1
         {
             table2.Controls.Add(new Label
             {
-                Text = "$" + product.Price
+                Text = "$" + string.Format("{0:0.00}", product.Price)
             }); 
         }
         private void CreateTotalLabel(Product product)
         {
             table2.Controls.Add(new Label
             {
-                Text = "$" + product.CalculateQuantityAndPrice()
+                Text = "$" + string.Format("{0:0.00}", product.CalculateQuantityAndPrice())
             });
         }
         private void CreateEndingLabels()
@@ -488,15 +465,15 @@ namespace Projekt1
             table2.Controls.Add(new Label
             {
                 Name = "0",
-                Text = "Subtotal: $" + subtotalVariable,
-                Dock = DockStyle.Right,
+                Text = "Subtotal: $" + string.Format("{0:0.00}", subtotalVariable),
+                Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.TopRight
             });
             table2.SetColumnSpan(table2.Controls["0"], 4);
             table2.Controls.Add(new Label
             {
                 Name = "1",
-                Text = "Tax(6%): $" + taxAmount,
+                Text = "Tax(6%): $" + string.Format("{0:0.00}", taxAmount),
                 Dock = DockStyle.Right,
                 TextAlign = ContentAlignment.TopRight
             });
@@ -504,12 +481,18 @@ namespace Projekt1
             table2.Controls.Add(new Label
             {
                 Name = "2",
-                Text = "Total: $" + total,
+                Text = "Total: $" + string.Format("{0:0.00}", total),
                 Dock = DockStyle.Right,
                 TextAlign = ContentAlignment.TopRight
             });
             table2.SetColumnSpan(table2.Controls["2"], 4);
-
+        }
+        private void CreateHeaderLabel(Control x, string y)
+        {
+            x.Controls.Add(new Label
+            {
+                Text = y
+            });
         }
     }
 }
