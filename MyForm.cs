@@ -24,8 +24,9 @@ namespace Projekt1
         private TextBox textBox1;
         private Button buttonCode;
         private List<Product> products;
-        
- 
+        private bool codeFound = false;
+
+
         public MyForm()
         {
             products = new List<Product> { };
@@ -106,7 +107,7 @@ namespace Projekt1
             //C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt
             //C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt
             //C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt
-            string path = @"C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
+            string path = @"C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
             //loop to grab values from a text file to create Products or Items.
@@ -387,14 +388,18 @@ namespace Projekt1
             {
                 foreach (Product product in products)
                 {
+                    if(codeFound == true)
+                    {
+                        product.Price = product.Price * .8;
+                    }
                     product.CalculateQuantityAndPrice();
                     CreateNameLabel(product);
                     CreateQuantityLabel(product);
                     CreatePriceLabel(product);
                     CreateTotalLabel(product);
                 }
-                taxAmount = total * 0.06;
-                total += taxAmount;
+                taxAmount = subtotalVariable * 0.06;
+                total = subtotalVariable + taxAmount;
                 buttonOrder.Visible = false;
                 CreateEndingLabels();
             }
@@ -407,10 +412,10 @@ namespace Projekt1
         //Click method for rebate code.
         private void ClickedEventHandler2(object sender, EventArgs e)
         {
-            string path1 = @"C:\Users\Jacob\Documents\GitHub\Projekt1\Codes.txt";
+            string path1 = @"C:\Users\Joe\source\repos\Projekt1\Projekt1\Codes.txt";
             string[] validCodes = File.ReadAllLines(path1);
             string userCode = textBox1.Text;
-            bool codeFound = false;
+            
 
             while (userCode != null && !codeFound)
             {
@@ -419,6 +424,7 @@ namespace Projekt1
                     if(code == userCode)
                     {
                         codeFound = true;
+                        break;
                     }
                 }
 
@@ -431,8 +437,8 @@ namespace Projekt1
 
             if (codeFound)
             {
-                total = total * 0.8;
                 MessageBox.Show("You will receive a 20% discount!");
+                subtotalLabel.Text = Subtotal();
             }
         }
 
@@ -444,9 +450,13 @@ namespace Projekt1
             {
                 x += product.CalculateQuantityAndPrice();
             }
+            if (codeFound == true)
+            {
+                x = x * .8;
+            }
             subtotalVariable = x;
-            total = x;
-            return "Subtotal: " + Environment.NewLine + "$" + x;
+            
+            return "Subtotal: " + Environment.NewLine + "$" + subtotalVariable;
         }
 
 
