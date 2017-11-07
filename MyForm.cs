@@ -107,7 +107,7 @@ namespace Projekt1
             //C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt
             //C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt
             //C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt
-            string path = @"C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt"; /* products list location  @"";*/
+            string path = @"C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt"; /* products list location  @"";*/
             string[] lines = File.ReadAllLines(path);
 
             //loop to grab values from a text file to create Products or Items.
@@ -412,27 +412,21 @@ namespace Projekt1
         //Click method for rebate code.
         private void ClickedEventHandler2(object sender, EventArgs e)
         {
-            string path1 = @"C:\Users\Joe\source\repos\Projekt1\Projekt1\Codes.txt";
+            string path1 = @"C:\Users\Jacob\Documents\GitHub\Projekt1\Codes.txt";
             string[] validCodes = File.ReadAllLines(path1);
             string userCode = textBox1.Text;
-            
 
-            while (userCode != null && !codeFound)
+            foreach (string code in validCodes)
             {
-                foreach(string code in validCodes)
+                if (code == userCode)
                 {
-                    if(code == userCode)
-                    {
-                        codeFound = true;
-                        break;
-                    }
+                    codeFound = true;
                 }
+            }
 
-                if (!codeFound)
-                {
-                    MessageBox.Show("Invalid code, please enter a new one!");
-                    break;
-                }
+            if (!codeFound)
+            {
+                MessageBox.Show("Invalid code, please enter a new one!");
             }
 
             if (codeFound)
