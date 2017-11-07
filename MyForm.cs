@@ -428,8 +428,7 @@ namespace Projekt1
             {
                 MessageBox.Show("Invalid code, please enter a new one!");
             }
-
-            if (codeFound)
+            else if (codeFound)
             {
                 MessageBox.Show("You will receive a 20% discount!");
                 subtotalLabel.Text = Subtotal();
