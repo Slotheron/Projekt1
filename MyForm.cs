@@ -29,22 +29,12 @@ namespace Projekt1
         public MyForm()
         {
             products = new List<Product> { };
-            var tableMaster = (new TableLayoutPanel
-            {
-                ColumnCount = 2,
-                RowCount = 1,
-                Dock = DockStyle.Fill
-            });
+            TableLayoutPanel tableMaster = CreateTable(2, 1);
             tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 65));
             tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35));
             Controls.Add(tableMaster);
 
-            var table1 = (new TableLayoutPanel
-            {
-               ColumnCount = 2,
-               RowCount = 4,
-               Dock = DockStyle.Fill
-            });
+            var table1 = CreateTable(2, 4);
             table1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80));
             table1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20));
             table1.RowStyles.Add(new RowStyle(SizeType.Percent, 25));
@@ -100,11 +90,7 @@ namespace Projekt1
             var imagesColumn1 = new DataGridViewImageColumn();
             grid1.Columns.Insert(0, imagesColumn1);
 
-            //users' file paths
-            //C:\Users\Joakim\Documents\GitHub\Projekt1\Products.txt
-            //C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt
-            //C:\Users\Jacob\Documents\GitHub\Projekt1\Products.txt
-            string path = @"C:\Users\Joe\source\repos\Projekt1\Projekt1\Products.txt"; /* products list location  @"";*/
+            string path = "Products.txt"; 
             string[] lines = File.ReadAllLines(path);
 
             //loop to grab values from a text file to create Products or Items.
@@ -131,17 +117,12 @@ namespace Projekt1
                 
 
             }
-            //if(grid1.Rows.Count < lines.Length)
-            //{
-            //    //Application.Exit();
-            //}
-            //resizing of each rows height to a static amount and the info column's width.
+            
             foreach(DataGridViewRow rows in grid1.Rows)
             {
                 rows.Height = 75;
                 grid1.Columns[2].Width = 125;
             }
-            
             grid1.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             
             grid2 = (new DataGridView
@@ -390,7 +371,7 @@ namespace Projekt1
         //Click method for rebate code.
         private void RebateCodeButtonClick(object sender, EventArgs e)
         {
-            string path1 = @"C:\Users\Joe\source\repos\Projekt1\Projekt1\Codes.txt";
+            string path1 = "Codes.txt";
             string[] validCodes = File.ReadAllLines(path1);
             string userCode = textBox1.Text;
 
@@ -494,5 +475,15 @@ namespace Projekt1
                 Text = y
             });
         }
+        private TableLayoutPanel CreateTable(int x, int y)
+        {
+            return (new TableLayoutPanel
+            {
+                ColumnCount = x,
+                RowCount = y,
+                Dock = DockStyle.Fill
+            });
+        }
+        
     }
 }
