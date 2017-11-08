@@ -245,12 +245,11 @@ namespace Projekt1
                 var name = grid1.Rows[e.RowIndex].Cells[1].Value;
                 var info = grid1.Rows[e.RowIndex].Cells[2].Value;
                 var price = grid1.Rows[e.RowIndex].Cells[3].Value;
-                string x = Convert.ToString(price);
-                x = x.Remove(0, 1);
+                string priceToString = Convert.ToString(price);
+                priceToString = priceToString.Remove(0, 1);
 
                 if (firstTime == false)
                 {
-                    
                     foreach (DataGridViewRow rows in grid2.Rows)
                     {
                         if (name == rows.Cells[1].Value)
@@ -258,9 +257,10 @@ namespace Projekt1
                             quantity = Convert.ToInt32(rows.Cells[3].Value);
                             products[rows.Index].Quantity = quantity += 1;
                             rows.Cells[3].Value = quantity;
-                            double y = Convert.ToDouble(x);
-                            y = y * quantity;
-                            string priceString = "$" + Convert.ToString(y);
+                            //needed to remove the '$' before converting to double
+                            double priceAmount = Convert.ToDouble(priceToString);
+                            priceAmount = priceAmount * quantity;
+                            string priceString = "$" + Convert.ToString(priceAmount);
                             rows.Cells[4].Value = priceString;
                             productTime = false;
                             break;
@@ -280,9 +280,9 @@ namespace Projekt1
                             ItemName = Convert.ToString(name),
                             Info = Convert.ToString(info),
                             Quantity = Convert.ToInt32(quantity),
-                            Price = Convert.ToDouble(x)
+                            Price = Convert.ToDouble(priceToString)
                         });
-                        grid2.Rows.Add(image, name, info, quantity,"$" + x);
+                        grid2.Rows.Add(image, name, info, quantity,"$" + priceToString);
                     }
                 }
                 else
@@ -292,7 +292,7 @@ namespace Projekt1
                         ItemName = Convert.ToString(name),
                         Info = Convert.ToString(info),
                         Quantity = 1,
-                        Price = Convert.ToDouble(x)
+                        Price = Convert.ToDouble(priceToString)
                     });
                     grid2.Rows.Add(image, name, info, quantity, price);
                     firstTime = false;
@@ -315,17 +315,17 @@ namespace Projekt1
             var senderGrid = (DataGridView)sender;
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
-                int x = Convert.ToInt32(grid2.Rows[e.RowIndex].Cells[3].Value);
-                if(x > 1)
+                int itemQuantity = Convert.ToInt32(grid2.Rows[e.RowIndex].Cells[3].Value);
+                if(itemQuantity > 1)
                 {
                     string stringPrice = Convert.ToString(grid2.Rows[e.RowIndex].Cells[4].Value);
                     stringPrice = stringPrice.Remove(0, 1);
-                    double y = Convert.ToDouble(stringPrice);
-                    singlePrice = y / x;
-                    x--;
-                    grid2.Rows[e.RowIndex].Cells[3].Value = x;
-                    grid2.Rows[e.RowIndex].Cells[4].Value = "$" + (y - singlePrice);
-                    products[e.RowIndex].Quantity = x;
+                    double combinedPrice = Convert.ToDouble(stringPrice);
+                    singlePrice = combinedPrice / itemQuantity;
+                    itemQuantity--;
+                    grid2.Rows[e.RowIndex].Cells[3].Value = itemQuantity;
+                    grid2.Rows[e.RowIndex].Cells[4].Value = "$" + (combinedPrice - singlePrice);
+                    products[e.RowIndex].Quantity = itemQuantity;
                 }
                 else
                 {
