@@ -227,8 +227,7 @@ namespace Projekt1
         //click methods for adding and removing items to the cart grid (cartGrid)
         private void AddToCartButton(object sender, DataGridViewCellEventArgs e)
         {
-            bool productBool = true;
-            bool productTime = false;
+            bool productFirstTime = false;
             int quantity = 1;
             var senderGrid = (DataGridView)sender;
             if(senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
@@ -254,17 +253,16 @@ namespace Projekt1
                             priceAmount = priceAmount * quantity;
                             string priceString = "$" + Convert.ToString(priceAmount);
                             rows.Cells[4].Value = priceString;
-                            productTime = false;
+                            productFirstTime = false;
                             break;
                         }
                         else
                         {
-                            productTime = true;
+                            productFirstTime = true;
                         }     
                     }
-                    productBool = false;
                     
-                    if (productTime == true && productBool == false)
+                    if (productFirstTime == true)
                     {
                         quantity = 1;
                         products.Add(new Product
