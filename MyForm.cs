@@ -88,7 +88,6 @@ namespace Projekt1
 
             string path = "Products.txt"; 
             string[] lines = File.ReadAllLines(path);
-
             //loop to grab values from a text file to create Products or Items.
             foreach (string x in lines)
             {
@@ -110,8 +109,6 @@ namespace Projekt1
                     string price = parts[3];
                     productsGrid.Rows.Add(null, product, info, "$" + price);
                 }
-                
-
             }
             
             foreach(DataGridViewRow rows in productsGrid.Rows)
@@ -178,7 +175,6 @@ namespace Projekt1
             };
             receiptTable.SetColumnSpan(receiptLabel, 4);
             receiptTable.Controls.Add(receiptLabel);
-
             receiptTable.Controls.Add(CreateHeaderLabel("Product "));
             receiptTable.Controls.Add(CreateHeaderLabel("Quantity"));
             receiptTable.Controls.Add(CreateHeaderLabel("Price Per Item"));
@@ -404,7 +400,6 @@ namespace Projekt1
                 x = x * .8;
             }
             subtotalVariable = x;
-            
             return "Subtotal: " + Environment.NewLine + "$" + string.Format("{0:0.00}",subtotalVariable);
         }
 
@@ -464,6 +459,7 @@ namespace Projekt1
             });
             receiptTable.SetColumnSpan(receiptTable.Controls["2"], 4);
         }
+        //header labels
         private Label CreateHeaderLabel(string y)
         {
             return (new Label
@@ -471,6 +467,7 @@ namespace Projekt1
                 Text = y
             });
         }
+        //table abstraction
         private TableLayoutPanel CreateTable(int x, int y)
         {
             return (new TableLayoutPanel
