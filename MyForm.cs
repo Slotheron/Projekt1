@@ -43,13 +43,9 @@ namespace Projekt1
             table1.RowStyles.Add(new RowStyle(SizeType.Percent, 25));
             tableMaster.Controls.Add(table1);
 
-            table2 = (new TableLayoutPanel
-            {
-                AutoScroll = true,
-                ColumnCount = 4,
-                Dock = DockStyle.Fill,
-                BackColor = Color.Gray
-            });
+            table2 = CreateTable(4, 0);
+            table2.AutoScroll = true;
+            table2.BackColor = Color.Gray;
             table2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
             table2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
             table2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
