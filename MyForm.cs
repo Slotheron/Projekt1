@@ -15,9 +15,9 @@ namespace Projekt1
         private double subtotalVariable = 0;
         private double taxAmount = 0;
         private double total = 0;
-        private DataGridView grid1;
-        private DataGridView grid2;
-        private TableLayoutPanel table2;
+        private DataGridView productsGrid; 
+        private DataGridView cartGrid;
+        private TableLayoutPanel receiptTable;
         private Label subtotalLabel;
         private Label rebateLabel;
         private Button buttonOrder;
@@ -34,25 +34,25 @@ namespace Projekt1
             tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35));
             Controls.Add(tableMaster);
 
-            var table1 = CreateTable(2, 4);
-            table1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80));
-            table1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20));
-            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 25));
-            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 25));
-            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 25));
-            table1.RowStyles.Add(new RowStyle(SizeType.Percent, 25));
-            tableMaster.Controls.Add(table1);
+            var orderTable = CreateTable(2, 4);
+            orderTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80));
+            orderTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20));
+            orderTable.RowStyles.Add(new RowStyle(SizeType.Percent, 25));
+            orderTable.RowStyles.Add(new RowStyle(SizeType.Percent, 25));
+            orderTable.RowStyles.Add(new RowStyle(SizeType.Percent, 25));
+            orderTable.RowStyles.Add(new RowStyle(SizeType.Percent, 25));
+            tableMaster.Controls.Add(orderTable);
 
-            table2 = CreateTable(4, 0);
-            table2.AutoScroll = true;
-            table2.BackColor = Color.Gray;
-            table2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
-            table2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
-            table2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
-            table2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
-            tableMaster.Controls.Add(table2);
+            receiptTable = CreateTable(4, 0);
+            receiptTable.AutoScroll = true;
+            receiptTable.BackColor = Color.Gray;
+            receiptTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
+            receiptTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
+            receiptTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
+            receiptTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25));
+            tableMaster.Controls.Add(receiptTable);
             
-            grid1 = (new DataGridView
+            productsGrid = (new DataGridView
             {
                 ColumnCount = 3,
                 Dock = DockStyle.Fill,
@@ -63,17 +63,17 @@ namespace Projekt1
                 ReadOnly = true,
                 BackgroundColor = Color.White
             });
-            grid1.Columns[0].Name = "Product";
-            grid1.Columns[1].Name = "Info";
-            grid1.Columns[2].Name = "Price Per Item";
-            grid1.Columns["Product"].ReadOnly = true;
-            grid1.Columns["Info"].ReadOnly = true;
-            grid1.Columns["Price Per Item"].ReadOnly = true;
-            table1.Controls.Add(grid1);
-            table1.SetColumnSpan(grid1, 2);
-            table1.SetRowSpan(grid1, 2);
+            productsGrid.Columns[0].Name = "Product";
+            productsGrid.Columns[1].Name = "Info";
+            productsGrid.Columns[2].Name = "Price Per Item";
+            productsGrid.Columns["Product"].ReadOnly = true;
+            productsGrid.Columns["Info"].ReadOnly = true;
+            productsGrid.Columns["Price Per Item"].ReadOnly = true;
+            orderTable.Controls.Add(productsGrid);
+            orderTable.SetColumnSpan(productsGrid, 2);
+            orderTable.SetRowSpan(productsGrid, 2);
             
-            //creates a button column in grid1
+            //creates a button column in productsGrid
             var buttonColumn1 = new DataGridViewButtonColumn
             {
                 Text = "Add to cart",
@@ -81,10 +81,10 @@ namespace Projekt1
                 UseColumnTextForButtonValue = true,
                 DefaultCellStyle = new DataGridViewCellStyle { Padding = new Padding(0,25,0,25) }
             };
-            grid1.Columns.Insert(3, buttonColumn1);
-            //creates image column in grid1
+            productsGrid.Columns.Insert(3, buttonColumn1);
+            //creates image column in productsGrid
             var imagesColumn1 = new DataGridViewImageColumn();
-            grid1.Columns.Insert(0, imagesColumn1);
+            productsGrid.Columns.Insert(0, imagesColumn1);
 
             string path = "Products.txt"; 
             string[] lines = File.ReadAllLines(path);
@@ -100,7 +100,7 @@ namespace Projekt1
                     string product = parts[1];
                     string info = parts[2];
                     string price = parts[3];
-                    grid1.Rows.Add(bitmap, product, info, "$" + price);
+                    productsGrid.Rows.Add(bitmap, product, info, "$" + price);
                 }
                 catch
                 {
@@ -108,20 +108,20 @@ namespace Projekt1
                     string product = parts[1];
                     string info = parts[2];
                     string price = parts[3];
-                    grid1.Rows.Add(null, product, info, "$" + price);
+                    productsGrid.Rows.Add(null, product, info, "$" + price);
                 }
                 
 
             }
             
-            foreach(DataGridViewRow rows in grid1.Rows)
+            foreach(DataGridViewRow rows in productsGrid.Rows)
             {
                 rows.Height = 75;
-                grid1.Columns[2].Width = 125;
+                productsGrid.Columns[2].Width = 125;
             }
-            grid1.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            productsGrid.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             
-            grid2 = (new DataGridView
+            cartGrid = (new DataGridView
             {
                 ColumnCount = 4,
                 Dock = DockStyle.Fill,
@@ -132,33 +132,33 @@ namespace Projekt1
                 ReadOnly = true,
                 BackgroundColor = Color.White
             });
-            //grid2 headers
-            grid2.Columns[0].Name = "Product";
-            grid2.Columns[1].Name = "Info";
-            grid2.Columns[2].Name = "Qty.";
-            grid2.Columns[3].Name = "Total Price";
-            grid2.Columns["Product"].ReadOnly = true;
-            grid2.Columns["Info"].ReadOnly = true;
-            grid2.Columns["Qty."].ReadOnly = true;
-            grid2.Columns["Total Price"].ReadOnly = true;
-            table1.Controls.Add(grid2);
-            table1.SetRowSpan(grid2, 2);
+            //cartGrid headers
+            cartGrid.Columns[0].Name = "Product";
+            cartGrid.Columns[1].Name = "Info";
+            cartGrid.Columns[2].Name = "Qty.";
+            cartGrid.Columns[3].Name = "Total Price";
+            cartGrid.Columns["Product"].ReadOnly = true;
+            cartGrid.Columns["Info"].ReadOnly = true;
+            cartGrid.Columns["Qty."].ReadOnly = true;
+            cartGrid.Columns["Total Price"].ReadOnly = true;
+            orderTable.Controls.Add(cartGrid);
+            orderTable.SetRowSpan(cartGrid, 2);
 
             //makes the info column's text multilined
-            grid2.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            cartGrid.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
-            //set the button column for the cart grid (grid2)
+            //set the button column for the cart grid (cartGrid)
             var buttonColumn2 = new DataGridViewButtonColumn
             {
                 Text = "Remove from cart",
                 UseColumnTextForButtonValue = true,
                 DefaultCellStyle = new DataGridViewCellStyle { Padding = new Padding(0, 25, 0, 25) }
             };
-            grid2.Columns.Insert(4, buttonColumn2);
+            cartGrid.Columns.Insert(4, buttonColumn2);
 
-            //sets image column for the cart grid (grid2)
+            //sets image column for the cart grid (cartGrid)
             var imagesColumn2 = new DataGridViewImageColumn();
-            grid2.Columns.Insert(0, imagesColumn2);
+            cartGrid.Columns.Insert(0, imagesColumn2);
 
             subtotalLabel = new Label
             {
@@ -166,7 +166,7 @@ namespace Projekt1
                 Dock = DockStyle.Fill,
                 Font = new Font("", 14)
             };
-            table1.Controls.Add(subtotalLabel);
+            orderTable.Controls.Add(subtotalLabel);
 
             var receiptLabel = new Label
             {
@@ -176,13 +176,13 @@ namespace Projekt1
                 Anchor = AnchorStyles.Top,
                 Height = 80
             };
-            table2.SetColumnSpan(receiptLabel, 4);
-            table2.Controls.Add(receiptLabel);
-            
-            CreateHeaderLabel(table2, "Product ");
-            CreateHeaderLabel(table2, "Quantity");
-            CreateHeaderLabel(table2, "Price Per Item");
-            CreateHeaderLabel(table2, "Total Price");
+            receiptTable.SetColumnSpan(receiptLabel, 4);
+            receiptTable.Controls.Add(receiptLabel);
+
+            receiptTable.Controls.Add(CreateHeaderLabel("Product "));
+            receiptTable.Controls.Add(CreateHeaderLabel("Quantity"));
+            receiptTable.Controls.Add(CreateHeaderLabel("Price Per Item"));
+            receiptTable.Controls.Add(CreateHeaderLabel("Total Price"));
             
             buttonOrder = new Button
             {
@@ -191,8 +191,8 @@ namespace Projekt1
                 Height = 100,
                 BackColor = Color.White
             };
-            table2.Controls.Add(buttonOrder);
-            table2.SetColumnSpan(buttonOrder, 4);
+            receiptTable.Controls.Add(buttonOrder);
+            receiptTable.SetColumnSpan(buttonOrder, 4);
 
             var table3 = (new TableLayoutPanel
             {
@@ -201,7 +201,7 @@ namespace Projekt1
                 BackColor = Color.Gray,
                 Dock = DockStyle.Bottom
             });
-            table1.Controls.Add(table3);
+            orderTable.Controls.Add(table3);
             rebateLabel = new Label
             {
                 Text = "Enter Rebate Code Here:",
@@ -222,13 +222,13 @@ namespace Projekt1
             };
             table3.Controls.Add(buttonCode);
 
-            grid1.CellContentClick += AddToCartButton;
-            grid2.CellContentClick += RemoveFromCartButton;
+            productsGrid.CellContentClick += AddToCartButton;
+            cartGrid.CellContentClick += RemoveFromCartButton;
             buttonOrder.Click += PlaceOrderButton;
             buttonCode.Click += RebateCodeButtonClick;
         }
 
-        //click methods for adding and removing items to the cart grid (grid2)
+        //click methods for adding and removing items to the cart grid (cartGrid)
         private void AddToCartButton(object sender, DataGridViewCellEventArgs e)
         {
             bool productBool = true;
@@ -237,16 +237,16 @@ namespace Projekt1
             var senderGrid = (DataGridView)sender;
             if(senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
-                var image = grid1.Rows[e.RowIndex].Cells[0].Value;
-                var name = grid1.Rows[e.RowIndex].Cells[1].Value;
-                var info = grid1.Rows[e.RowIndex].Cells[2].Value;
-                var price = grid1.Rows[e.RowIndex].Cells[3].Value;
+                var image = productsGrid.Rows[e.RowIndex].Cells[0].Value;
+                var name = productsGrid.Rows[e.RowIndex].Cells[1].Value;
+                var info = productsGrid.Rows[e.RowIndex].Cells[2].Value;
+                var price = productsGrid.Rows[e.RowIndex].Cells[3].Value;
                 string priceToString = Convert.ToString(price);
                 priceToString = priceToString.Remove(0, 1);
 
                 if (firstTime == false)
                 {
-                    foreach (DataGridViewRow rows in grid2.Rows)
+                    foreach (DataGridViewRow rows in cartGrid.Rows)
                     {
                         if (name == rows.Cells[1].Value)
                         {
@@ -278,7 +278,7 @@ namespace Projekt1
                             Quantity = Convert.ToInt32(quantity),
                             Price = Convert.ToDouble(priceToString)
                         });
-                        grid2.Rows.Add(image, name, info, quantity,"$" + priceToString);
+                        cartGrid.Rows.Add(image, name, info, quantity,"$" + priceToString);
                     }
                 }
                 else
@@ -290,15 +290,15 @@ namespace Projekt1
                         Quantity = 1,
                         Price = Convert.ToDouble(priceToString)
                     });
-                    grid2.Rows.Add(image, name, info, quantity, price);
+                    cartGrid.Rows.Add(image, name, info, quantity, price);
                     firstTime = false;
                 }
-                foreach (DataGridViewRow rows in grid2.Rows)
+                foreach (DataGridViewRow rows in cartGrid.Rows)
                 {
                     rows.Height = 75;
-                    grid2.Columns[2].Width = 125;
-                    grid2.Columns[3].Width = 30;
-                    grid2.Columns[4].Width = 70;
+                    cartGrid.Columns[2].Width = 125;
+                    cartGrid.Columns[3].Width = 30;
+                    cartGrid.Columns[4].Width = 70;
                 }
                 subtotalLabel.Text = Subtotal();
             }
@@ -311,22 +311,22 @@ namespace Projekt1
             var senderGrid = (DataGridView)sender;
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
             {
-                int itemQuantity = Convert.ToInt32(grid2.Rows[e.RowIndex].Cells[3].Value);
+                int itemQuantity = Convert.ToInt32(cartGrid.Rows[e.RowIndex].Cells[3].Value);
                 if(itemQuantity > 1)
                 {
-                    string stringPrice = Convert.ToString(grid2.Rows[e.RowIndex].Cells[4].Value);
+                    string stringPrice = Convert.ToString(cartGrid.Rows[e.RowIndex].Cells[4].Value);
                     stringPrice = stringPrice.Remove(0, 1);
                     double combinedPrice = Convert.ToDouble(stringPrice);
                     singlePrice = combinedPrice / itemQuantity;
                     itemQuantity--;
-                    grid2.Rows[e.RowIndex].Cells[3].Value = itemQuantity;
-                    grid2.Rows[e.RowIndex].Cells[4].Value = "$" + (combinedPrice - singlePrice);
+                    cartGrid.Rows[e.RowIndex].Cells[3].Value = itemQuantity;
+                    cartGrid.Rows[e.RowIndex].Cells[4].Value = "$" + (combinedPrice - singlePrice);
                     products[e.RowIndex].Quantity = itemQuantity;
                 }
                 else
                 {
                     products.RemoveAt(e.RowIndex);
-                    grid2.Rows.RemoveAt(e.RowIndex);
+                    cartGrid.Rows.RemoveAt(e.RowIndex);
                     if(products.Count < 1)
                     {
                         firstTime = true;
@@ -411,62 +411,62 @@ namespace Projekt1
         //Receipt labels
         private void CreateNameLabel(Product product)
         {
-            table2.Controls.Add(new Label
+            receiptTable.Controls.Add(new Label
             {
                 Text = product.ItemName
             });
         }
         private void CreateQuantityLabel(Product product)
         {
-            table2.Controls.Add(new Label
+            receiptTable.Controls.Add(new Label
             {
                 Text = Convert.ToString(product.Quantity)
             });
         }
         private void CreatePriceLabel(Product product)
         {
-            table2.Controls.Add(new Label
+            receiptTable.Controls.Add(new Label
             {
                 Text = "$" + string.Format("{0:0.00}", product.Price)
             }); 
         }
         private void CreateTotalLabel(Product product)
         {
-            table2.Controls.Add(new Label
+            receiptTable.Controls.Add(new Label
             {
                 Text = "$" + string.Format("{0:0.00}", product.CalculateQuantityAndPrice())
             });
         }
         private void CreateEndingLabels()
         {
-            table2.Controls.Add(new Label
+            receiptTable.Controls.Add(new Label
             {
                 Name = "0",
                 Text = "Subtotal: $" + string.Format("{0:0.00}", subtotalVariable),
                 Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.TopRight
             });
-            table2.SetColumnSpan(table2.Controls["0"], 4);
-            table2.Controls.Add(new Label
+            receiptTable.SetColumnSpan(receiptTable.Controls["0"], 4);
+            receiptTable.Controls.Add(new Label
             {
                 Name = "1",
                 Text = "Tax(6%): $" + string.Format("{0:0.00}", taxAmount),
                 Dock = DockStyle.Right,
                 TextAlign = ContentAlignment.TopRight
             });
-            table2.SetColumnSpan(table2.Controls["1"], 4);
-            table2.Controls.Add(new Label
+            receiptTable.SetColumnSpan(receiptTable.Controls["1"], 4);
+            receiptTable.Controls.Add(new Label
             {
                 Name = "2",
                 Text = "Total: $" + string.Format("{0:0.00}", total),
                 Dock = DockStyle.Right,
                 TextAlign = ContentAlignment.TopRight
             });
-            table2.SetColumnSpan(table2.Controls["2"], 4);
+            receiptTable.SetColumnSpan(receiptTable.Controls["2"], 4);
         }
-        private void CreateHeaderLabel(Control x, string y)
+        private Label CreateHeaderLabel(string y)
         {
-            x.Controls.Add(new Label
+            return (new Label
             {
                 Text = y
             });
