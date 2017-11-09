@@ -11,6 +11,7 @@ namespace Projekt1
 {
     class MyForm : Form
     {
+        private bool codeFound = false;
         private bool firstTime = true;
         private double subtotalVariable = 0;
         private double taxAmount = 0;
@@ -24,7 +25,6 @@ namespace Projekt1
         private TextBox textBox1;
         private Button buttonCode;
         private List<Product> products;
-        private bool codeFound = false;
 
         public MyForm()
         {
@@ -337,11 +337,10 @@ namespace Projekt1
             {
                 foreach (Product product in products)
                 {
-                    if(codeFound == true)
+                    if (codeFound == true)
                     {
                         product.Price = product.Price * .8;
                     }
-                    product.CalculateQuantityAndPrice();
                     CreateNameLabel(product);
                     CreateQuantityLabel(product);
                     CreatePriceLabel(product);
