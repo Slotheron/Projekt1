@@ -27,6 +27,8 @@ namespace Projekt1
 
         public MyForm()
         {
+            Height = 650;
+            Width = 1200;
             products = new List<Product> { };
             TableLayoutPanel tableMaster = CreateTable(2, 1);
             tableMaster.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 65));
