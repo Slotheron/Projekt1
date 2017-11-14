@@ -12,7 +12,6 @@ namespace Projekt1
     class MyForm : Form
     {
         private bool codeFound = false;
-        private bool firstTime = true;
         private double subtotalVariable = 0;
         private double taxAmount = 0;
         private double total = 0;
@@ -227,7 +226,7 @@ namespace Projekt1
         //click methods for adding and removing items to the cart grid (cartGrid)
         private void AddToCartButton(object sender, DataGridViewCellEventArgs e)
         {
-            bool productFirstTime = false;
+            bool productFirstTime = true;
             int quantity = 1;
             var senderGrid = (DataGridView)sender;
             if(senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
@@ -239,53 +238,37 @@ namespace Projekt1
                 string priceToString = Convert.ToString(price);
                 priceToString = priceToString.Remove(0, 1);
 
-                if (firstTime == false)
+                foreach (DataGridViewRow rows in cartGrid.Rows)
                 {
-                    foreach (DataGridViewRow rows in cartGrid.Rows)
+                    if (name == rows.Cells[1].Value)
                     {
-                        if (name == rows.Cells[1].Value)
-                        {
-                            quantity = Convert.ToInt32(rows.Cells[3].Value);
-                            products[rows.Index].Quantity = quantity += 1;
-                            rows.Cells[3].Value = quantity;
-                            //needed to remove the '$' before converting to double
-                            double priceAmount = Convert.ToDouble(priceToString);
-                            priceAmount = priceAmount * quantity;
-                            string priceString = "$" + Convert.ToString(priceAmount);
-                            rows.Cells[4].Value = priceString;
-                            productFirstTime = false;
-                            break;
-                        }
-                        else
-                        {
-                            productFirstTime = true;
-                        }     
+                        quantity = Convert.ToInt32(rows.Cells[3].Value);
+                        products[rows.Index].Quantity = quantity += 1;
+                        rows.Cells[3].Value = quantity;
+                        //needed to remove the '$' before converting to double
+                        double priceAmount = Convert.ToDouble(priceToString);
+                        priceAmount = priceAmount * quantity;
+                        string priceString = "$" + Convert.ToString(priceAmount);
+                        rows.Cells[4].Value = priceString;
+                        productFirstTime = false;
+                        break;
                     }
-                    
-                    if (productFirstTime == true)
+                    else
                     {
-                        quantity = 1;
-                        products.Add(new Product
-                        {
-                            ItemName = Convert.ToString(name),
-                            Info = Convert.ToString(info),
-                            Quantity = Convert.ToInt32(quantity),
-                            Price = Convert.ToDouble(priceToString)
-                        });
-                        cartGrid.Rows.Add(image, name, info, quantity,"$" + priceToString);
+                        productFirstTime = true;
                     }
                 }
-                else
+                if (productFirstTime == true)
                 {
+                    quantity = 1;
                     products.Add(new Product
                     {
                         ItemName = Convert.ToString(name),
                         Info = Convert.ToString(info),
-                        Quantity = 1,
+                        Quantity = Convert.ToInt32(quantity),
                         Price = Convert.ToDouble(priceToString)
                     });
-                    cartGrid.Rows.Add(image, name, info, quantity, price);
-                    firstTime = false;
+                    cartGrid.Rows.Add(image, name, info, quantity, "$" + priceToString);
                 }
                 foreach (DataGridViewRow rows in cartGrid.Rows)
                 {
@@ -321,10 +304,6 @@ namespace Projekt1
                 {
                     products.RemoveAt(e.RowIndex);
                     cartGrid.Rows.RemoveAt(e.RowIndex);
-                    if(products.Count < 1)
-                    {
-                        firstTime = true;
-                    }
                 }
                 subtotalLabel.Text = Subtotal();
             }
